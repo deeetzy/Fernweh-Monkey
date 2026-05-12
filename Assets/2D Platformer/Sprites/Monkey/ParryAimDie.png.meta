@@ -1,0 +1,614 @@
+fileFormatVersion: 2
+guid: 706cdf293333b3846987ed790942ec5c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8651960885419315245
+    second: ParryAimDie_0
+  - first:
+      213: -4484469321944022431
+    second: ParryAimDie_1
+  - first:
+      213: 6424814178470281531
+    second: ParryAimDie_2
+  - first:
+      213: -8429020035015737802
+    second: ParryAimDie_3
+  - first:
+      213: 2963334619869917354
+    second: ParryAimDie_4
+  - first:
+      213: -684042877977340657
+    second: ParryAimDie_5
+  - first:
+      213: 4192976916883873960
+    second: ParryAimDie_6
+  - first:
+      213: 1479143509323215297
+    second: ParryAimDie_7
+  - first:
+      213: 1797545847820953492
+    second: ParryAimDie_8
+  - first:
+      213: 2527044954000729297
+    second: ParryAimDie_9
+  - first:
+      213: 8434265337991822811
+    second: ParryAimDie_10
+  - first:
+      213: -7779912542250716505
+    second: ParryAimDie_11
+  - first:
+      213: 5637298177616509195
+    second: ParryAimDie_12
+  - first:
+      213: 3289780840896016853
+    second: ParryAimDie_13
+  - first:
+      213: 6530262884019227664
+    second: ParryAimDie_14
+  - first:
+      213: 5985352581632881821
+    second: ParryAimDie_15
+  - first:
+      213: -1095129143118435886
+    second: ParryAimDie_16
+  - first:
+      213: -8786944473274742187
+    second: ParryAimDie_17
+  - first:
+      213: 6776647661861750665
+    second: ParryAimDie_18
+  - first:
+      213: 3826295751701278912
+    second: ParryAimDie_19
+  - first:
+      213: 352809006057280990
+    second: ParryAimDie_20
+  - first:
+      213: 3902075493405065231
+    second: ParryAimDie_21
+  - first:
+      213: -7446526597601782218
+    second: ParryAimDie_22
+  - first:
+      213: -6362337145122109017
+    second: ParryAimDie_23
+  - first:
+      213: 7977491358341290717
+    second: ParryAimDie_24
+  - first:
+      213: -1082150246908909910
+    second: ParryAimDie_25
+  - first:
+      213: -7065493657983301330
+    second: ParryAimDie_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 256
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ParryAimDie_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.48417285, y: 0.24033184}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d201ef1d590f11870800000000000000
+      internalID: 8651960885419315245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_1
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.57194185, y: 0.23746254}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 162c36359e6f3c1c0800000000000000
+      internalID: -4484469321944022431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_2
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5129497, y: 0.18581598}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b314d978476892950800000000000000
+      internalID: 6424814178470281531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_3
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.510072, y: 0.20733553}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63e7c30efea160b80800000000000000
+      internalID: -8429020035015737802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_4
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.43237495, y: 0.25324348}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa0b6f7e221ef1920800000000000000
+      internalID: 2963334619869917354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4109
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5848914, y: 0.20733553}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f05560f60aac186f0800000000000000
+      internalID: -684042877977340657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_6
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 4109
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.47697878, y: 0.20590064}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a0a6426a42703a30800000000000000
+      internalID: 4192976916883873960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_7
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 4109
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.54172635, y: 0.18725039}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c1f8055f29f68410800000000000000
+      internalID: 1479143509323215297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_8
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 4109
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.53026056, y: 0.22174245}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 497a8debc6a22f810800000000000000
+      internalID: 1797545847820953492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_9
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 4109
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5268984, y: 0.21839009}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d428ae2ffdd11320800000000000000
+      internalID: 2527044954000729297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3082
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.50601447, y: 0.30235854}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdd746463a78c0570800000000000000
+      internalID: 8434265337991822811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_11
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 3082
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.48797095, y: 0.26611897}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a23a8733c2380490800000000000000
+      internalID: -7779912542250716505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_12
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 3082
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.52143764, y: 0.23637591}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b09f9c923d4bb3e40800000000000000
+      internalID: 5637298177616509195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_13
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 3082
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5214374, y: 0.28150055}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d13e7aae36a7ad20800000000000000
+      internalID: 3289780840896016853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_14
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 3082
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5500207, y: 0.27912572}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01c42e38e7720aa50800000000000000
+      internalID: 6530262884019227664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2055
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.54210174, y: 0.3680671}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d94f1b3167e301350800000000000000
+      internalID: 5985352581632881821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_16
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 2055
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.55613554, y: 0.29810283}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d96f39b8d15dc0f0800000000000000
+      internalID: -1095129143118435886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ParryAimDie_17
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 2055
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.54611135, y: 0.30210084}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55a80698e808e0680800000000000000
+      internalID: -8786944473274742187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a0a26195d7be70842af3f57e3556659a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":6.0},"gridSpriteSize":{"x":1024.0,"y":1027.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      ParryAimDie_0: 8651960885419315245
+      ParryAimDie_1: -4484469321944022431
+      ParryAimDie_10: 8434265337991822811
+      ParryAimDie_11: -7779912542250716505
+      ParryAimDie_12: 5637298177616509195
+      ParryAimDie_13: 3289780840896016853
+      ParryAimDie_14: 6530262884019227664
+      ParryAimDie_15: 5985352581632881821
+      ParryAimDie_16: -1095129143118435886
+      ParryAimDie_17: -8786944473274742187
+      ParryAimDie_2: 6424814178470281531
+      ParryAimDie_3: -8429020035015737802
+      ParryAimDie_4: 2963334619869917354
+      ParryAimDie_5: -684042877977340657
+      ParryAimDie_6: 4192976916883873960
+      ParryAimDie_7: 1479143509323215297
+      ParryAimDie_8: 1797545847820953492
+      ParryAimDie_9: 2527044954000729297
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

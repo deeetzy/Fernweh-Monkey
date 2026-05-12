@@ -1,0 +1,990 @@
+fileFormatVersion: 2
+guid: db3492fc094bb234a84525476e79cabd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6421253237547160104
+    second: Muller2_0
+  - first:
+      213: 2028712164050289230
+    second: Muller2_1
+  - first:
+      213: -4799271397967340613
+    second: Muller2_2
+  - first:
+      213: -5898482826761175788
+    second: Muller2_3
+  - first:
+      213: -6014509752999890261
+    second: Muller2_4
+  - first:
+      213: 3238714210720392365
+    second: Muller2_5
+  - first:
+      213: -7412126022746499875
+    second: Muller2_6
+  - first:
+      213: 6729922400124287094
+    second: Muller2_7
+  - first:
+      213: -5393979141900901719
+    second: Muller2_8
+  - first:
+      213: -6633740633398648000
+    second: Muller2_9
+  - first:
+      213: 4631546659419832164
+    second: Muller2_10
+  - first:
+      213: 1368643667267687662
+    second: Muller2_11
+  - first:
+      213: -1016452701550374136
+    second: Muller2_12
+  - first:
+      213: -8841022517455686803
+    second: Muller2_13
+  - first:
+      213: 4169414071212720594
+    second: Muller2_14
+  - first:
+      213: 2386208944617463541
+    second: Muller2_15
+  - first:
+      213: 7621546497070460858
+    second: Muller2_16
+  - first:
+      213: -2853679888663825917
+    second: Muller2_17
+  - first:
+      213: -4012231956649565154
+    second: Muller2_18
+  - first:
+      213: -5012397297587513688
+    second: Muller2_19
+  - first:
+      213: -2557326430295918914
+    second: Muller2_20
+  - first:
+      213: 4853459742698294543
+    second: Muller2_21
+  - first:
+      213: 6907579808602522507
+    second: Muller2_22
+  - first:
+      213: -5987756424944349883
+    second: Muller2_23
+  - first:
+      213: 2836069605556124918
+    second: Muller2_24
+  - first:
+      213: 4690806531823704482
+    second: Muller2_25
+  - first:
+      213: 3767550520537020498
+    second: Muller2_26
+  - first:
+      213: -58748940119207912
+    second: Muller2_27
+  - first:
+      213: 7227941307191132411
+    second: Muller2_28
+  - first:
+      213: -9170043133206246082
+    second: Muller2_29
+  - first:
+      213: 1755792230501672268
+    second: Muller2_30
+  - first:
+      213: 7469764002037213494
+    second: Muller2_31
+  - first:
+      213: -1259267892152586639
+    second: Muller2_32
+  - first:
+      213: 8870707575946993668
+    second: Muller2_33
+  - first:
+      213: 1950633227908623374
+    second: Muller2_34
+  - first:
+      213: 1795535871512669222
+    second: Muller2_35
+  - first:
+      213: 1250201433768218060
+    second: Muller2_36
+  - first:
+      213: -6979819194136865632
+    second: Muller2_37
+  - first:
+      213: 5567258566159726443
+    second: Muller2_38
+  - first:
+      213: -6206640834947515423
+    second: Muller2_39
+  - first:
+      213: -957631136034568952
+    second: Muller2_40
+  - first:
+      213: -5529862266908536086
+    second: Muller2_41
+  - first:
+      213: 1682698883235995934
+    second: Muller2_42
+  - first:
+      213: -8933156562827136505
+    second: Muller2_43
+  - first:
+      213: 7878287575833864950
+    second: Muller2_44
+  - first:
+      213: 8823458659913165401
+    second: Muller2_45
+  - first:
+      213: 22432277365883089
+    second: Muller2_46
+  - first:
+      213: 5432343222704596452
+    second: Muller2_47
+  - first:
+      213: 6339861976468084382
+    second: Muller2_48
+  - first:
+      213: -5456933168319926746
+    second: Muller2_49
+  - first:
+      213: 7702773745398695449
+    second: Muller2_50
+  - first:
+      213: 1329709015243517321
+    second: Muller2_51
+  - first:
+      213: -4265736841583800744
+    second: Muller2_52
+  - first:
+      213: 5142654665006533939
+    second: Muller2_53
+  - first:
+      213: 2327992447659875245
+    second: Muller2_54
+  - first:
+      213: 5567349157252235875
+    second: Muller2_55
+  - first:
+      213: -6412116538537617719
+    second: Muller2_56
+  - first:
+      213: -5875347715871423570
+    second: Muller2_57
+  - first:
+      213: 3918992072841400954
+    second: Muller2_58
+  - first:
+      213: 3622707953073523530
+    second: Muller2_59
+  - first:
+      213: 125391771053416045
+    second: Muller2_60
+  - first:
+      213: -3625270451060086813
+    second: Muller2_61
+  - first:
+      213: 6489074246814567201
+    second: Muller2_62
+  - first:
+      213: -7356910963051871845
+    second: Muller2_63
+  - first:
+      213: 7680901141223288140
+    second: Muller2_64
+  - first:
+      213: -5849791281889260797
+    second: Muller2_65
+  - first:
+      213: -4384725426513779209
+    second: Muller2_66
+  - first:
+      213: -585458507257724225
+    second: Muller2_67
+  - first:
+      213: -4484995597811376557
+    second: Muller2_68
+  - first:
+      213: 2390691364483038483
+    second: Muller2_69
+  - first:
+      213: -6567649123644170035
+    second: Muller2_70
+  - first:
+      213: 7416956963569303855
+    second: Muller2_71
+  - first:
+      213: -894360204370444893
+    second: Muller2_72
+  - first:
+      213: -1786033165424312463
+    second: Muller2_73
+  - first:
+      213: -6724345900820508983
+    second: Muller2_74
+  - first:
+      213: -6426435906042415395
+    second: Muller2_75
+  - first:
+      213: 1001838795793524184
+    second: Muller2_76
+  - first:
+      213: -1417287617510153823
+    second: Muller2_77
+  - first:
+      213: 6776942010652801413
+    second: Muller2_78
+  - first:
+      213: -5002557565604019587
+    second: Muller2_79
+  - first:
+      213: -1957951206955914259
+    second: Muller2_80
+  - first:
+      213: 9108203678601242051
+    second: Muller2_81
+  - first:
+      213: 4743608125874273622
+    second: Muller2_82
+  - first:
+      213: -3706115875835948755
+    second: Muller2_83
+  - first:
+      213: -3124055011507041811
+    second: Muller2_84
+  - first:
+      213: 4204780577021358670
+    second: Muller2_85
+  - first:
+      213: -270992169563552131
+    second: Muller2_86
+  - first:
+      213: 746051384552519869
+    second: Muller2_87
+  - first:
+      213: 1437229175032339396
+    second: Muller2_88
+  - first:
+      213: -5852536359052701277
+    second: Muller2_89
+  - first:
+      213: -1875709901924485607
+    second: Muller2_90
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 256
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Muller2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10236
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.49255946, y: 0.29954755}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82253dc5ccfdc1950800000000000000
+      internalID: 6421253237547160104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_1
+      rect:
+        serializedVersion: 2
+        x: 2052
+        y: 10236
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.36328042, y: 0.2650511}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e424bb1f6fe672c10800000000000000
+      internalID: 2028712164050289230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_2
+      rect:
+        serializedVersion: 2
+        x: 4104
+        y: 10236
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.40606344, y: 0.269713}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbbd6775710956db0800000000000000
+      internalID: -4799271397967340613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_3
+      rect:
+        serializedVersion: 2
+        x: 6156
+        y: 10236
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.52418184, y: 0.3014124}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41d782dde11642ea0800000000000000
+      internalID: -5898482826761175788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_4
+      rect:
+        serializedVersion: 2
+        x: 8210
+        y: 10236
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.56269467, y: 0.34683138}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba2b152fe3b288ca0800000000000000
+      internalID: -6014509752999890261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8189
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.49606365, y: 0.3461034}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da4affa4a6932fc20800000000000000
+      internalID: 3238714210720392365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_6
+      rect:
+        serializedVersion: 2
+        x: 2052
+        y: 8189
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.4862226, y: 0.3401844}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd414c747a6d22990800000000000000
+      internalID: -7412126022746499875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_7
+      rect:
+        serializedVersion: 2
+        x: 4104
+        y: 8189
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.48819083, y: 0.3401844}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6783a5924cc756d50800000000000000
+      internalID: 6729922400124287094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_8
+      rect:
+        serializedVersion: 2
+        x: 6156
+        y: 8189
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.54526955, y: 0.3204537}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a261298c8cb425b0800000000000000
+      internalID: -5393979141900901719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_9
+      rect:
+        serializedVersion: 2
+        x: 8208
+        y: 8189
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.49803212, y: 0.30269668}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 043e23e7a0830f3a0800000000000000
+      internalID: -6633740633398648000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6142
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.50590485, y: 0.32637295}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46fbd53d52f864040800000000000000
+      internalID: 4631546659419832164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_11
+      rect:
+        serializedVersion: 2
+        x: 2052
+        y: 6142
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.49212718, y: 0.40134835}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee4149bf9266ef210800000000000000
+      internalID: 1368643667267687662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_12
+      rect:
+        serializedVersion: 2
+        x: 4104
+        y: 6142
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.5039367, y: 0.34413022}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8039a1147a5d4e1f0800000000000000
+      internalID: -1016452701550374136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_13
+      rect:
+        serializedVersion: 2
+        x: 6156
+        y: 6142
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.5413331, y: 0.33229196}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d63f2d3bcd06e4580800000000000000
+      internalID: -8841022517455686803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_14
+      rect:
+        serializedVersion: 2
+        x: 8208
+        y: 6142
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.5059051, y: 0.3756989}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d1462cd10cbcd930800000000000000
+      internalID: 4169414071212720594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4095
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.4744131, y: 0.37175283}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fe98c774648d1120800000000000000
+      internalID: 2386208944617463541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_16
+      rect:
+        serializedVersion: 2
+        x: 2052
+        y: 4095
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.48228624, y: 0.37569913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abfe10d882c25c960800000000000000
+      internalID: 7621546497070460858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_17
+      rect:
+        serializedVersion: 2
+        x: 4104
+        y: 4095
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.5039367, y: 0.385564}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 302348db241b568d0800000000000000
+      internalID: -2853679888663825917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_18
+      rect:
+        serializedVersion: 2
+        x: 6156
+        y: 4095
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.5157461, y: 0.37372574}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e14ae6b0b40b158c0800000000000000
+      internalID: -4012231956649565154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_19
+      rect:
+        serializedVersion: 2
+        x: 8208
+        y: 4095
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.49606377, y: 0.40726736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a61b24f633607ab0800000000000000
+      internalID: -5012397297587513688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2048
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.50662655, y: 0.3870749}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb67e73392d828cd0800000000000000
+      internalID: -2557326430295918914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_21
+      rect:
+        serializedVersion: 2
+        x: 2052
+        y: 2048
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.526506, y: 0.3306122}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0dc037dbe3fa5340800000000000000
+      internalID: 4853459742698294543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_22
+      rect:
+        serializedVersion: 2
+        x: 4104
+        y: 2048
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.50497013, y: 0.3472189}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b830a6dec37acdf50800000000000000
+      internalID: 6907579808602522507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_23
+      rect:
+        serializedVersion: 2
+        x: 6156
+        y: 2048
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.49834362, y: 0.37378955}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54d01a9814737eca0800000000000000
+      internalID: -5987756424944349883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_24
+      rect:
+        serializedVersion: 2
+        x: 8208
+        y: 2048
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.506627, y: 0.36880752}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fc7475b74ebb5720800000000000000
+      internalID: 2836069605556124918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Muller2_25
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 2052
+        height: 2047
+      alignment: 9
+      pivot: {x: 0.50828314, y: 0.32895142}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a91f6f00b7191140800000000000000
+      internalID: 4690806531823704482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 21fb85048b8e63946bfdeb3cf10b39fa
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":6.0},"gridSpriteSize":{"x":2052.0,"y":2047.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Muller2_0: 6421253237547160104
+      Muller2_1: 2028712164050289230
+      Muller2_10: 4631546659419832164
+      Muller2_11: 1368643667267687662
+      Muller2_12: -1016452701550374136
+      Muller2_13: -8841022517455686803
+      Muller2_14: 4169414071212720594
+      Muller2_15: 2386208944617463541
+      Muller2_16: 7621546497070460858
+      Muller2_17: -2853679888663825917
+      Muller2_18: -4012231956649565154
+      Muller2_19: -5012397297587513688
+      Muller2_2: -4799271397967340613
+      Muller2_20: -2557326430295918914
+      Muller2_21: 4853459742698294543
+      Muller2_22: 6907579808602522507
+      Muller2_23: -5987756424944349883
+      Muller2_24: 2836069605556124918
+      Muller2_25: 4690806531823704482
+      Muller2_3: -5898482826761175788
+      Muller2_4: -6014509752999890261
+      Muller2_5: 3238714210720392365
+      Muller2_6: -7412126022746499875
+      Muller2_7: 6729922400124287094
+      Muller2_8: -5393979141900901719
+      Muller2_9: -6633740633398648000
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

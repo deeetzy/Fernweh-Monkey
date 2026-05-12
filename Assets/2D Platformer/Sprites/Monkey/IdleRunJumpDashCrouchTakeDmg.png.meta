@@ -1,0 +1,937 @@
+fileFormatVersion: 2
+guid: 7c7e955093b0c1248a8adb8d409a4806
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8524045448781465171
+    second: IdleRunJumpDashCrouchTakeDmg_0
+  - first:
+      213: 3794261531520881389
+    second: IdleRunJumpDashCrouchTakeDmg_1
+  - first:
+      213: -7531943896155887878
+    second: IdleRunJumpDashCrouchTakeDmg_2
+  - first:
+      213: -2277942782336920756
+    second: IdleRunJumpDashCrouchTakeDmg_3
+  - first:
+      213: 4965969680469053592
+    second: IdleRunJumpDashCrouchTakeDmg_4
+  - first:
+      213: 3992681557548823131
+    second: IdleRunJumpDashCrouchTakeDmg_5
+  - first:
+      213: 7532721983747585715
+    second: IdleRunJumpDashCrouchTakeDmg_6
+  - first:
+      213: 5282623646650618649
+    second: IdleRunJumpDashCrouchTakeDmg_7
+  - first:
+      213: -687199496470447750
+    second: IdleRunJumpDashCrouchTakeDmg_8
+  - first:
+      213: 5230854503177038892
+    second: IdleRunJumpDashCrouchTakeDmg_9
+  - first:
+      213: -8727240598770410314
+    second: IdleRunJumpDashCrouchTakeDmg_10
+  - first:
+      213: -6413455892081161156
+    second: IdleRunJumpDashCrouchTakeDmg_11
+  - first:
+      213: -7983199856542632069
+    second: IdleRunJumpDashCrouchTakeDmg_12
+  - first:
+      213: -6202163137896079829
+    second: IdleRunJumpDashCrouchTakeDmg_13
+  - first:
+      213: -6098371282140318401
+    second: IdleRunJumpDashCrouchTakeDmg_14
+  - first:
+      213: -5974369373436317005
+    second: IdleRunJumpDashCrouchTakeDmg_15
+  - first:
+      213: 1566510597679804655
+    second: IdleRunJumpDashCrouchTakeDmg_16
+  - first:
+      213: -769954983940598095
+    second: IdleRunJumpDashCrouchTakeDmg_17
+  - first:
+      213: -8799366793238212121
+    second: IdleRunJumpDashCrouchTakeDmg_18
+  - first:
+      213: 8574685027427449827
+    second: IdleRunJumpDashCrouchTakeDmg_19
+  - first:
+      213: 73355095134915410
+    second: IdleRunJumpDashCrouchTakeDmg_20
+  - first:
+      213: 8826565248335772189
+    second: IdleRunJumpDashCrouchTakeDmg_21
+  - first:
+      213: -588116196916773876
+    second: IdleRunJumpDashCrouchTakeDmg_22
+  - first:
+      213: -4365956424242991959
+    second: IdleRunJumpDashCrouchTakeDmg_23
+  - first:
+      213: -3776306567978318768
+    second: IdleRunJumpDashCrouchTakeDmg_24
+  - first:
+      213: 5962940747987920496
+    second: IdleRunJumpDashCrouchTakeDmg_25
+  - first:
+      213: -1389087405577719997
+    second: IdleRunJumpDashCrouchTakeDmg_26
+  - first:
+      213: 255022599808116219
+    second: IdleRunJumpDashCrouchTakeDmg_27
+  - first:
+      213: -4437006799371550829
+    second: IdleRunJumpDashCrouchTakeDmg_28
+  - first:
+      213: 5994410821859126907
+    second: IdleRunJumpDashCrouchTakeDmg_29
+  - first:
+      213: 7829951190529639464
+    second: IdleRunJumpDashCrouchTakeDmg_30
+  - first:
+      213: 984060043856599278
+    second: IdleRunJumpDashCrouchTakeDmg_31
+  - first:
+      213: -8063280049185720832
+    second: IdleRunJumpDashCrouchTakeDmg_32
+  - first:
+      213: 588702150279463868
+    second: IdleRunJumpDashCrouchTakeDmg_33
+  - first:
+      213: -4813909834251691108
+    second: IdleRunJumpDashCrouchTakeDmg_34
+  - first:
+      213: -7042681101952023435
+    second: IdleRunJumpDashCrouchTakeDmg_35
+  - first:
+      213: -6460082901445682615
+    second: IdleRunJumpDashCrouchTakeDmg_36
+  - first:
+      213: 9045711580786401258
+    second: IdleRunJumpDashCrouchTakeDmg_37
+  - first:
+      213: -3237264127245313964
+    second: IdleRunJumpDashCrouchTakeDmg_38
+  - first:
+      213: 2117844666497919308
+    second: IdleRunJumpDashCrouchTakeDmg_39
+  - first:
+      213: 1129912592965299767
+    second: IdleRunJumpDashCrouchTakeDmg_40
+  - first:
+      213: -578907292356904919
+    second: IdleRunJumpDashCrouchTakeDmg_41
+  - first:
+      213: 1224532347322227562
+    second: IdleRunJumpDashCrouchTakeDmg_42
+  - first:
+      213: -6109653109768792153
+    second: IdleRunJumpDashCrouchTakeDmg_43
+  - first:
+      213: 3531523538934622028
+    second: IdleRunJumpDashCrouchTakeDmg_44
+  - first:
+      213: 604598020822823890
+    second: IdleRunJumpDashCrouchTakeDmg_45
+  - first:
+      213: -8132788383787430072
+    second: IdleRunJumpDashCrouchTakeDmg_46
+  - first:
+      213: -7653118742901698615
+    second: IdleRunJumpDashCrouchTakeDmg_47
+  - first:
+      213: 5430236094677398369
+    second: IdleRunJumpDashCrouchTakeDmg_48
+  - first:
+      213: -2751742472467906882
+    second: IdleRunJumpDashCrouchTakeDmg_49
+  - first:
+      213: -7757023484459067131
+    second: IdleRunJumpDashCrouchTakeDmg_50
+  - first:
+      213: -7786033772768353209
+    second: IdleRunJumpDashCrouchTakeDmg_51
+  - first:
+      213: 4836870409574645014
+    second: IdleRunJumpDashCrouchTakeDmg_52
+  - first:
+      213: -6610050497617948731
+    second: IdleRunJumpDashCrouchTakeDmg_53
+  - first:
+      213: 5804345153974269045
+    second: IdleRunJumpDashCrouchTakeDmg_54
+  - first:
+      213: -8622600204082817798
+    second: IdleRunJumpDashCrouchTakeDmg_55
+  - first:
+      213: 5506406976287706397
+    second: IdleRunJumpDashCrouchTakeDmg_56
+  - first:
+      213: -5702831146085175907
+    second: IdleRunJumpDashCrouchTakeDmg_57
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 256
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.52070516, y: 0.24465601}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35687ef5c2e7b4670800000000000000
+      internalID: 8524045448781465171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_1
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.52202606, y: 0.24479008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de25b3392cce7a430800000000000000
+      internalID: 3794261531520881389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_2
+      rect:
+        serializedVersion: 2
+        x: 2049
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.537976, y: 0.24479008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af6e471bee8297790800000000000000
+      internalID: -7531943896155887878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_3
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.48480964, y: 0.24554746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c439428cb1f1360e0800000000000000
+      internalID: -2277942782336920756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_4
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 5136
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.50911427, y: 0.24706176}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 890d7b11d1baae440800000000000000
+      internalID: 4965969680469053592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4109
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5227147, y: 0.20288253}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5273f2f8bad86730800000000000000
+      internalID: 3992681557548823131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_6
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 4109
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.51801944, y: 0.1979883}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b6fc01fbba998860800000000000000
+      internalID: 7532721983747585715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_7
+      rect:
+        serializedVersion: 2
+        x: 2054
+        y: 4111
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5885403, y: 0.21354817}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91350b4d736af4940800000000000000
+      internalID: 5282623646650618649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_8
+      rect:
+        serializedVersion: 2
+        x: 3073
+        y: 4109
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.52124095, y: 0.21939898}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a793d0be2b39676f0800000000000000
+      internalID: -687199496470447750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_9
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 4111
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5406947, y: 0.22208905}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2cae95d47ab79840800000000000000
+      internalID: 5230854503177038892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3084
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5062732, y: 0.26074624}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bc1ce01aec92e680800000000000000
+      internalID: -8727240598770410314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_11
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 3084
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.53607154, y: 0.25761876}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3ccdd998d3def6a0800000000000000
+      internalID: -6413455892081161156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_12
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 3082
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5737114, y: 0.2638737}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b77b3dbf60af53190800000000000000
+      internalID: -7983199856542632069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_13
+      rect:
+        serializedVersion: 2
+        x: 3075
+        y: 3082
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.48745322, y: 0.26700118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2e9eae8c7d7de9a0800000000000000
+      internalID: -6202163137896079829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_14
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 3082
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.52195644, y: 0.25761876}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f35359321ab3e5ba0800000000000000
+      internalID: -6098371282140318401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2055
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5172516, y: 0.3116946}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b2fa5b55b6c61da0800000000000000
+      internalID: -5974369373436317005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_16
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 2055
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5188198, y: 0.33664092}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe0f69fb61d5db510800000000000000
+      internalID: 1566510597679804655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_17
+      rect:
+        serializedVersion: 2
+        x: 2050
+        y: 2059
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5407767, y: 0.291439}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b6dd2185029055f0800000000000000
+      internalID: -769954983940598095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_18
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 2057
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.55073357, y: 0.29765734}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e11ba8c58e52e580800000000000000
+      internalID: -8799366793238212121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_19
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 2055
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5201092, y: 0.3054651}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eb7ca01a966ff670800000000000000
+      internalID: 8574685027427449827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1028
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.50456685, y: 0.2837051}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25b4bf3021c940100800000000000000
+      internalID: 73355095134915410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_21
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1028
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5091337, y: 0.2791515}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1a7cd504524e7a70800000000000000
+      internalID: 8826565248335772189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_22
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 1028
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.52055097, y: 0.24272262}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c3f145f6796d7f0800000000000000
+      internalID: -588116196916773876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_23
+      rect:
+        serializedVersion: 2
+        x: 3076
+        y: 1028
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5022831, y: 0.27915126}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ac692493c10963c0800000000000000
+      internalID: -4365956424242991959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_24
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 1028
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.54110193, y: 0.2837051}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0548da42f2dd79bc0800000000000000
+      internalID: -3776306567978318768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5296849, y: 0.2882588}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 076a58c640f90c250800000000000000
+      internalID: 5962940747987920496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_26
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5182675, y: 0.27915165}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34f22944d58f8bce0800000000000000
+      internalID: -1389087405577719997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IdleRunJumpDashCrouchTakeDmg_27
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 1
+        width: 1024
+        height: 1027
+      alignment: 9
+      pivot: {x: 0.5411022, y: 0.2723213}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf5624f04b50a8300800000000000000
+      internalID: 255022599808116219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: de520a5e874930348be8e37e4d239527
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":6.0},"gridSpriteSize":{"x":1024.0,"y":1027.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      IdleRunJumpDashCrouchTakeDmg_0: 8524045448781465171
+      IdleRunJumpDashCrouchTakeDmg_1: 3794261531520881389
+      IdleRunJumpDashCrouchTakeDmg_10: -8727240598770410314
+      IdleRunJumpDashCrouchTakeDmg_11: -6413455892081161156
+      IdleRunJumpDashCrouchTakeDmg_12: -7983199856542632069
+      IdleRunJumpDashCrouchTakeDmg_13: -6202163137896079829
+      IdleRunJumpDashCrouchTakeDmg_14: -6098371282140318401
+      IdleRunJumpDashCrouchTakeDmg_15: -5974369373436317005
+      IdleRunJumpDashCrouchTakeDmg_16: 1566510597679804655
+      IdleRunJumpDashCrouchTakeDmg_17: -769954983940598095
+      IdleRunJumpDashCrouchTakeDmg_18: -8799366793238212121
+      IdleRunJumpDashCrouchTakeDmg_19: 8574685027427449827
+      IdleRunJumpDashCrouchTakeDmg_2: -7531943896155887878
+      IdleRunJumpDashCrouchTakeDmg_20: 73355095134915410
+      IdleRunJumpDashCrouchTakeDmg_21: 8826565248335772189
+      IdleRunJumpDashCrouchTakeDmg_22: -588116196916773876
+      IdleRunJumpDashCrouchTakeDmg_23: -4365956424242991959
+      IdleRunJumpDashCrouchTakeDmg_24: -3776306567978318768
+      IdleRunJumpDashCrouchTakeDmg_25: 5962940747987920496
+      IdleRunJumpDashCrouchTakeDmg_26: -1389087405577719997
+      IdleRunJumpDashCrouchTakeDmg_27: 255022599808116219
+      IdleRunJumpDashCrouchTakeDmg_3: -2277942782336920756
+      IdleRunJumpDashCrouchTakeDmg_4: 4965969680469053592
+      IdleRunJumpDashCrouchTakeDmg_5: 3992681557548823131
+      IdleRunJumpDashCrouchTakeDmg_6: 7532721983747585715
+      IdleRunJumpDashCrouchTakeDmg_7: 5282623646650618649
+      IdleRunJumpDashCrouchTakeDmg_8: -687199496470447750
+      IdleRunJumpDashCrouchTakeDmg_9: 5230854503177038892
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
