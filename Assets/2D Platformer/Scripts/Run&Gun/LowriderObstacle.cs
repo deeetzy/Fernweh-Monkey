@@ -54,7 +54,7 @@ public class LowriderObstacle : MonoBehaviour
         // Dacă lovește jucătorul, apelăm funcția ta de damage
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Movement>()?.TakeDamage();
+            other.GetComponent<Movement>()?.TakeDamage("BOSS");
         }
     }
 }

@@ -23,5 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/2D Platformer/Scenes/PolizaiMuller.unity
     guid: f833ee56393d40347b8e2308adb89e13
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/2D Platformer/Scenes/Tutorial.unity
+    guid: 2ec5dbcd8b31ded47917fd77200c4c4e
+  m_configObjects:
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f,
+      type: 2}
   m_UseUCBPForAssetBundles: 0

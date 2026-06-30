@@ -24,7 +24,7 @@ public class Shockwave : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Movement>()?.TakeDamage();
+            collision.GetComponent<Movement>()?.TakeDamage("BOSS");
         }
     }
 }

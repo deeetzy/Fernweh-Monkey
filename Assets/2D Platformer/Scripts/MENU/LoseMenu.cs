@@ -1,20 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // Avem nevoie de asta pentru Slider
+using UnityEngine.UI;
 
 public class LoseMenu : MonoBehaviour
 {
-    public Slider progressBar; // Trage Slider-ul aici în Inspector
+    public Slider progressBar; 
 
     public void ShowProgress(float currentBossHP, float maxBossHP)
     {
-        // Oprim muzica de tot (cum ai avut tu)
         LevelAudioManager.Instance.musicSource.Stop();
-
-        // EXTRĂ: Întărim fâșâitul de film pentru atmosferă
         LevelAudioManager.Instance.loopsSource.volume = 0.3f;
-
-        // Punem sunetul de înfrângere
         LevelAudioManager.Instance.PlaySFX(LevelAudioManager.Instance.monkeyDefeat);
 
         float progress = 1f - (currentBossHP / maxBossHP);
@@ -24,6 +19,12 @@ public class LoseMenu : MonoBehaviour
     public void Restart()
     {
         LevelAudioManager.Instance.PlayOnClickSound();
+        DDA_Agent ddaAgent = Object.FindFirstObjectByType<DDA_Agent>();
+
+        if (ddaAgent != null)
+        {
+            ddaAgent.ResetDifficultyOnPlayerRestart();
+        }
 
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -31,8 +32,8 @@ public class LoseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
+        DDA_BulletproofExporter.ExportEvent("IESIRE_MENIU");
         Time.timeScale = 1f;
-        // Pune aici numele exact al scenei tale de meniu
         SceneManager.LoadScene("MENU");
     }
 }

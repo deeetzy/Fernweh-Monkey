@@ -7,10 +7,8 @@ public class StopSignBubble : MonoBehaviour
 
     void Update()
     {
-        // Move strictly horizontal
         transform.position += Vector3.left * moveDirection * moveSpeed * Time.deltaTime;
 
-        // Cleanup if it goes off-screen
         if (transform.position.x < -15f) Destroy(gameObject);
     }
 
@@ -19,7 +17,7 @@ public class StopSignBubble : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.bubblePop, 0.6f);
-            other.GetComponent<Movement>()?.TakeDamage();
+            other.GetComponent<Movement>()?.TakeDamage("Bubble");
             Destroy(gameObject);
         }
     }

@@ -1,0 +1,65 @@
+{
+    "DDA_Agent": {
+        "checkpoints": [
+            {
+                "steps": 499943,
+                "file_path": "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-499943.onnx",
+                "reward": null,
+                "creation_time": 1779118791.1016974,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-499943.pt"
+                ]
+            },
+            {
+                "steps": 999974,
+                "file_path": "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-999974.onnx",
+                "reward": null,
+                "creation_time": 1779122197.837585,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-999974.pt"
+                ]
+            },
+            {
+                "steps": 1499940,
+                "file_path": "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-1499940.onnx",
+                "reward": null,
+                "creation_time": 1779126077.0811396,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-1499940.pt"
+                ]
+            },
+            {
+                "steps": 1999989,
+                "file_path": "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-1999989.onnx",
+                "reward": null,
+                "creation_time": 1779129504.813088,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-1999989.pt"
+                ]
+            },
+            {
+                "steps": 2000053,
+                "file_path": "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-2000053.onnx",
+                "reward": null,
+                "creation_time": 1779129505.8596087,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-2000053.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2000053,
+            "file_path": "results\\Muller_DDA_v2\\DDA_Agent.onnx",
+            "reward": null,
+            "creation_time": 1779129505.8596087,
+            "auxillary_file_paths": [
+                "results\\Muller_DDA_v2\\DDA_Agent\\DDA_Agent-2000053.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "2.12.0+cpu"
+    }
+}

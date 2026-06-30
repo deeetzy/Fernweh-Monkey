@@ -28,8 +28,6 @@ public class MainMenuManager : MonoBehaviour
     public InputAction SubmitAction;
 
     private int selectedSlotToCreate;
-
-    // --- FLAG-ul DE SECURITATE ---
     private bool isExitingPanel = false;
 
     [System.Serializable]
@@ -55,7 +53,6 @@ public class MainMenuManager : MonoBehaviour
 
     void Update()
     {
-        // 1. Verificăm Esc
         if (EscAction.triggered)
         {
             if (nameInputPanel.activeSelf)
@@ -75,8 +72,6 @@ public class MainMenuManager : MonoBehaviour
             }
         }
 
-        // 2. Verificăm Enter (Submit)
-        // Adăugăm condiția !isExitingPanel ca să fim siguri că nu pornește dacă tocmai am ieșit cu Esc
         if (SubmitAction.triggered && nameInputPanel.activeSelf && !isExitingPanel)
         {
             OnNameInputSubmit(nameInputField.text);
@@ -95,7 +90,6 @@ public class MainMenuManager : MonoBehaviour
         if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(null);
 
-        // „Descuiem” ușa după o fracțiune de secundă (0.1s)
         Invoke("ResetExitFlag", 0.1f);
     }
 
@@ -150,9 +144,20 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    public void PlayTutorial()
+    {
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
+
+        if (mainMenuButtonsPanel != null) mainMenuButtonsPanel.SetActive(false);
+        if (optionsPanel != null) optionsPanel.SetActive(false);
+        if (saveSelectionPanel != null) saveSelectionPanel.SetActive(false);
+
+        StartCoroutine(LoadLevelAsync("Tutorial"));
+    }
+
     public void OnNameInputSubmit(string pName)
     {
-        // DACĂ tocmai ieșim din panel, ignorăm comanda
         if (isExitingPanel) return;
 
         if (string.IsNullOrWhiteSpace(pName)) pName = "Monkey";
@@ -178,7 +183,6 @@ public class MainMenuManager : MonoBehaviour
         StartCoroutine(LoadLevelAsync("PolizaiMuller"));
     }
 
-    // --- RESTUL FUNCȚIILOR RĂMÂN NESCHIMBATE ---
     public void DeleteSlot(int slotIndex)
     {
         string filePath = GetSavePath(slotIndex);
@@ -200,44 +204,36 @@ public class MainMenuManager : MonoBehaviour
 
     IEnumerator LoadLevelAsync(string sceneName)
     {
-        // 1. Apelăm fade-ul muzicii folosind scriptul tău existent
         MenuAudioManager audioMan = Object.FindFirstObjectByType<MenuAudioManager>();
         if (audioMan != null)
         {
             audioMan.StartLoadingFade();
         }
 
-        // 2. Ne asigurăm că toate panourile de meniu sunt închise înainte de loading
         saveSelectionPanel.SetActive(false);
         if (nameInputPanel != null) nameInputPanel.SetActive(false);
         if (mainMenuButtonsPanel != null) mainMenuButtonsPanel.SetActive(false);
 
-        // 3. Afișăm ecranul de loading
         loadingScreen.SetActive(true);
         loadingCanvasGroup.alpha = 1;
 
-        // 4. Pornim încărcarea scenei în fundal
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         operation.allowSceneActivation = false;
 
         float timer = 0;
-        // 5. Așteptăm cele 5 secunde (pentru animație/atmosferă) și încărcarea tehnică
         while (timer < 5f || operation.progress < 0.9f)
         {
             timer += Time.deltaTime;
             yield return null;
         }
 
-        // 6. Activăm scena nouă
         operation.allowSceneActivation = true;
 
-        // 7. Așteptăm până când scena este gata complet
         while (!operation.isDone)
         {
             yield return null;
         }
 
-        // 8. Dezactivăm ecranul de loading (după ce am trecut în scena nouă)
         loadingScreen.SetActive(false);
     }
 

@@ -22,7 +22,7 @@ public class CornProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Movement>()?.TakeDamage();
+            other.GetComponent<Movement>()?.TakeDamage("BOSS");
             Destroy(gameObject);
         }
         // NOU: Se sparge pe Ground DOAR dacă a trăit mai mult de 0.1 secunde

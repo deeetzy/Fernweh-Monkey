@@ -12,7 +12,7 @@ public class LevelAudioManager : MonoBehaviour
     [Header("Audio Sources")]
     public AudioSource musicSource;
     public AudioSource sfxSource;
-    public AudioSource loopsSource; // Pentru Jetpack, Ticking, etc.
+    public AudioSource loopsSource; 
     private AudioSource playerSource;
     private AudioSource bossSource;  
     private AudioSource combatSource;
@@ -64,18 +64,16 @@ public class LevelAudioManager : MonoBehaviour
     public AudioMixerSnapshot normalSnapshot;  // Snapshot-ul pentru luptă (sunet clar)
     public AudioMixerSnapshot muffledSnapshot; // Snapshot-ul pentru pauză (sunet înfundat)
 
-    // Tabel în care salvăm când a fost redat ultima oară fiecare sunet
     private Dictionary<AudioClip, float> lastPlayTime = new Dictionary<AudioClip, float>();
 
     [Header("Optimization")]
-    public float globalCooldown = 0.05f; // 50 milisecunde între sunete identice
+    public float globalCooldown = 0.05f;
 
     void Awake()
     {
         if (Instance == null) Instance = this;
         else { Destroy(gameObject); return; }
 
-        // CREĂM ȘI ASIGNĂM SURSELE INSTANTANEU
         musicSource = gameObject.AddComponent<AudioSource>();
         sfxSource = gameObject.AddComponent<AudioSource>();
         loopsSource = gameObject.AddComponent<AudioSource>();
@@ -83,7 +81,6 @@ public class LevelAudioManager : MonoBehaviour
         bossSource = gameObject.AddComponent<AudioSource>();
         combatSource = gameObject.AddComponent<AudioSource>();
 
-        // --- CONECTARE LA MIXER (IMPORTANT!) ---
         AutoAssignGroups();
 
         // Ierarhia Priorităților (0 e cel mai important)
@@ -94,7 +91,6 @@ public class LevelAudioManager : MonoBehaviour
         combatSource.priority = 80;    // Impact / Proiectile
         sfxSource.priority = 100;     // UI / Click-uri
 
-        // Configurație de bază ca să fim siguri că nu sunt nule
         musicSource.playOnAwake = false;
         sfxSource.playOnAwake = false;
         loopsSource.playOnAwake = false;
@@ -104,12 +100,10 @@ public class LevelAudioManager : MonoBehaviour
     {
         if (mainMixer == null) return;
 
-        // Căutăm grupurile după numele lor din Mixer
         AudioMixerGroup[] musicG = mainMixer.FindMatchingGroups("Music");
         AudioMixerGroup[] voicesG = mainMixer.FindMatchingGroups("Voices");
         AudioMixerGroup[] sfxG = mainMixer.FindMatchingGroups("SFX");
 
-        // Le asignăm surselor corespunzătoare
         if (musicG.Length > 0) musicSource.outputAudioMixerGroup = musicG[0];
         if (sfxG.Length > 0)
         {
@@ -124,10 +118,8 @@ public class LevelAudioManager : MonoBehaviour
         }
     }
 
-    // În LevelAudioManager.cs
     void Start()
     {
-        // Aplicăm volumele globale imediat ce începe lupta
         float mVol = PlayerPrefs.GetFloat("MusicVol", 0.75f);
         float vVol = PlayerPrefs.GetFloat("VoicesVol", 0.75f);
         float sVol = PlayerPrefs.GetFloat("SFXVol", 0.75f);
@@ -138,9 +130,9 @@ public class LevelAudioManager : MonoBehaviour
 
         if (backgroundMusic != null)
         {
-            musicSource.clip = backgroundMusic; // Punem "discul" în player
+            musicSource.clip = backgroundMusic; 
             musicSource.loop = true;
-            musicSource.Play(); // Acum va cânta!
+            musicSource.Play();
         }
 
         if (oldFilmSound != null)
@@ -151,21 +143,17 @@ public class LevelAudioManager : MonoBehaviour
         }
     }
 
-    // --- FUNCTII DE EXECUTIE ---
     public void SetMenuAtmosphere(bool inMenu)
     {
         Debug.Log("Schimbăm atmosfera: " + (inMenu ? "Muffled" : "Normal"));
         if (inMenu)
         {
-            // Trecem la setările de meniu în 0.5 secunde (fade fin)
             muffledSnapshot.TransitionTo(0f);
 
-            // Fâșâitul de film poate rămâne controlat manual dacă nu e în mixer
             loopsSource.volume = 0.3f;
         }
         else
         {
-            // Revenim la sunetul clar
             normalSnapshot.TransitionTo(0f);
             loopsSource.volume = 0.1f;
         }
@@ -175,15 +163,13 @@ public class LevelAudioManager : MonoBehaviour
     {
         if (buttonClickClip != null)
         {
-            // Forțăm sursa să fie gata
             sfxSource.ignoreListenerPause = true;
-            sfxSource.priority = 0; // 0 este cea mai mare prioritate în Unity!
+            sfxSource.priority = 0;
 
             sfxSource.PlayOneShot(buttonClickClip, 1f);
         }
     }
 
-    // Funcția care verifică dacă sunetul are voie să cânte
     private bool CanPlay(AudioClip clip)
     {
         if (clip == null) return false;
@@ -192,11 +178,10 @@ public class LevelAudioManager : MonoBehaviour
         {
             if (Time.time - lastPlayTime[clip] < globalCooldown)
             {
-                return false; // Prea devreme, blochează sunetul
+                return false; 
             }
         }
 
-        // Actualizăm timpul pentru acest clip
         lastPlayTime[clip] = Time.time;
         return true;
     }
@@ -205,30 +190,26 @@ public class LevelAudioManager : MonoBehaviour
     {
         if (!CanPlay(clip)) return;
         sfxSource.pitch = randomPitch ? Random.Range(0.85f, 1.15f) : 1f;
-        sfxSource.PlayOneShot(clip, volumeScale); // volumeScale acum e doar un multiplicator local (0-1)
+        sfxSource.PlayOneShot(clip, volumeScale);
     }
 
-    // Funcție specială pentru maimuță (reduce delay-ul și nu taie muzica)
     public void PlayPlayerSFX(AudioClip clip, float volumeScale = 1f, bool randomPitch = false)
     {
-        if (!CanPlay(clip)) return; // BARIERA
-        playerSource.pitch = randomPitch ? Random.Range(0.85f, 1.15f) : 1f; // Pitch rapid pentru varietate
+        if (!CanPlay(clip)) return;
+        playerSource.pitch = randomPitch ? Random.Range(0.85f, 1.15f) : 1f; 
         playerSource.PlayOneShot(clip, volumeScale);
     }
 
-    // Funcție pentru lupte
     public void PlayCombatSFX(AudioClip clip, float volumeScale = 1f, bool randomPitch = false)
     {
-        if (!CanPlay(clip)) return; // BARIERA
-        playerSource.pitch = randomPitch ? Random.Range(0.85f, 1.15f) : 1f; // Pitch rapid pentru varietate
+        if (!CanPlay(clip)) return;
+        playerSource.pitch = randomPitch ? Random.Range(0.85f, 1.15f) : 1f; 
         combatSource.PlayOneShot(clip, volumeScale);
     }
 
-    // Funcție specială pentru Müller
     public void PlayBossSFX(AudioClip clip, float volumeScale = 1f, bool randomPitch = false)
     {
-        if (!CanPlay(clip)) return; // BARIERA
-        // La boss nu punem mereu pitch random, pentru a păstra "autoritatea" vocii lui
+        if (!CanPlay(clip)) return; 
         bossSource.PlayOneShot(clip, volumeScale);
     }
 
@@ -248,16 +229,11 @@ public class LevelAudioManager : MonoBehaviour
 
     public void PlayVictoryMusic()
     {
-        // 1. Oprim muzica de boss (sau facem fade out dacă ai script pentru asta)
         musicSource.Stop();
-
-        // 2. Dezactivăm filtrele (LowPass) dacă vrei ca victoria să se audă clar
         SetMenuAtmosphere(false);
 
-        // 3. Redăm melodia de victorie (VictoryTheme)
-        // O poți pune pe musicSource dacă vrei să înlocuiască tot
         musicSource.clip = mullerDefeat;
-        musicSource.loop = false; // De obicei victoria nu e loop
+        musicSource.loop = false; 
         musicSource.Play();
     }
 }

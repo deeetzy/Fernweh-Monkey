@@ -44,7 +44,7 @@ public class SleepingCat : MonoBehaviour
         // 1. Dacă Maimuța sare fix pe pisică, maimuța ia damage
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Movement>()?.TakeDamage();
+            other.GetComponent<Movement>()?.TakeDamage("BOSS");
         }
         // 2. Dacă Maimuța o nimerește cu glonțul (folosind tag-ul tău!)
         else if (other.CompareTag("Banana"))

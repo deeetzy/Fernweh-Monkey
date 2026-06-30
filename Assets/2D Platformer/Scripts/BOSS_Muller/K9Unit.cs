@@ -8,14 +8,17 @@ public class K9Unit : MonoBehaviour
 
     [Header("Movement Settings")]
     public float patrolSpeed = 5f;
-    public float chargeSpeed = 13f;
+    public float chargeSpeed = 10f;
     public float entranceSpeed = 2.5f;
     public float targetWaitX = 9.5f;
     public float arenaLimit = 11.5f;
+    public float dynamicStunDuration = 1.8f;
+
+    public float ddaSpeedMultiplier = 1.0f;
 
     [Header("Detection")]
     public float detectionRange = 10f;
-    public float rearDetectionMinDist = 2.5f;
+    public float rearDetectionMinDist = 3.5f;
     public float chargeCooldown = 1.5f;
     public float overshootTolerance = 1.0f;
     private float currentCooldownTimer;
@@ -24,18 +27,17 @@ public class K9Unit : MonoBehaviour
     private int direction = -1;
     private Transform player;
     private SpriteRenderer sr;
-    private Animator anim; // Referință către Animator
+    private Animator anim;
 
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>(); // Inițializare animator
+        anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         transform.position = new Vector3(transform.position.x, groundY, 0);
 
         transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
-        // Start cu animația de mers la intrare
         anim.Play("Dog_Walk");
     }
 
@@ -68,7 +70,7 @@ public class K9Unit : MonoBehaviour
         {
             sr.color = Color.white;
             currentState = K9State.Patrol;
-            anim.Play("Dog_Walk"); // Trece la mers la începutul vânătorii
+            anim.Play("Dog_Walk");
         }
     }
 
@@ -80,7 +82,6 @@ public class K9Unit : MonoBehaviour
             transform.position = new Vector3(targetWaitX, groundY, 0);
             currentState = K9State.Barking;
 
-            // --- ANIMATIE INTRO (LATRAT) ---
             anim.Play("Dog_Intro");
             LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.k9UnitBark, 0.6f);
             StartCoroutine(WaitInIdleAfterIntro());
@@ -89,19 +90,18 @@ public class K9Unit : MonoBehaviour
 
     IEnumerator WaitInIdleAfterIntro()
     {
-        // Așteptăm să se termine animația de Intro (presupunem 1.5 secunde)
         yield return new WaitForSeconds(1.5f);
         if (currentState == K9State.Barking)
         {
-            anim.Play("Dog_Idle"); // Rămâne în Idle până la WakeUp()
+            anim.Play("Dog_Idle"); 
         }
     }
 
     void PatrolLogic()
     {
-        transform.Translate(Vector2.right * patrolSpeed * direction * Time.deltaTime);
+        float speed = patrolSpeed * ddaSpeedMultiplier;
+        transform.Translate(Vector2.right * speed * direction * Time.deltaTime);
 
-        // Dacă cumva a ieșit din vreo stare de atac, ne asigurăm că merge
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Dog_Walk"))
         {
             anim.Play("Dog_Walk");
@@ -136,7 +136,6 @@ public class K9Unit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug ca să vedem cu ce se ciocnește câinele
         Debug.Log("K9 a atins: " + other.gameObject.name + " cu tag-ul: " + other.tag);
 
         if (other.CompareTag("Player"))
@@ -146,7 +145,7 @@ public class K9Unit : MonoBehaviour
             Movement playerMovement = other.GetComponent<Movement>();
             if (playerMovement != null)
             {
-                playerMovement.TakeDamage();
+                playerMovement.TakeDamage("K9Unit");
                 Debug.Log("Damage trimis către Player!");
             }
 
@@ -155,7 +154,7 @@ public class K9Unit : MonoBehaviour
                 LevelAudioManager.Instance.StopLoop();
                 currentState = K9State.Patrol;
                 currentCooldownTimer = chargeCooldown;
-                anim.Play("Dog_Walk"); // Revenim la mers după ce am mușcat
+                anim.Play("Dog_Walk");
             }
         }
     }
@@ -163,17 +162,18 @@ public class K9Unit : MonoBehaviour
     IEnumerator PrepareCharge()
     {
         currentState = K9State.Barking;
-        anim.Play("Dog_Intro"); // Folosim Intro ca animație de "Bark" înainte de atac
+        anim.Play("Dog_Intro");
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.k9UnitBark, 0.7f);
         yield return new WaitForSeconds(0.4f);
 
         currentState = K9State.Charging;
-        anim.Play("Dog_Run"); // Trece la fuga agresivă
+        anim.Play("Dog_Run");
     }
 
     void ChargeLogic()
     {
-        transform.Translate(Vector2.right * chargeSpeed * direction * Time.deltaTime);
+        float speed = chargeSpeed * ddaSpeedMultiplier;
+        transform.Translate(Vector2.right * speed * direction * Time.deltaTime);
         bool hitWall = Mathf.Abs(transform.position.x) > arenaLimit;
 
         bool passedPlayer = false;
@@ -199,38 +199,39 @@ public class K9Unit : MonoBehaviour
     {
         currentState = K9State.Drifting;
         LevelAudioManager.Instance.StopLoop();
-        anim.Play("Dog_Stop"); // Animația de frână bruscă
+        anim.Play("Dog_Stop");
 
         float currentSpeed = chargeSpeed;
         while (currentSpeed > 0.5f)
         {
-            currentSpeed = Mathf.Lerp(currentSpeed, 0, Time.deltaTime * 6f);
-            transform.Translate(Vector2.right * currentSpeed * direction * Time.deltaTime);
+            currentSpeed = Mathf.Lerp(currentSpeed, 0, Time.deltaTime * 3f);
+            float speed = currentSpeed * ddaSpeedMultiplier;
+            transform.Translate(Vector2.right * speed * direction * Time.deltaTime);
 
             if (Mathf.Abs(transform.position.x) > arenaLimit) break;
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.4f); // Pauză în poziția de Stop
+        yield return new WaitForSeconds(0.4f); 
         direction *= -1;
         Flip();
 
         currentState = K9State.Patrol;
-        anim.Play("Dog_Walk"); // Revine la mers
+        anim.Play("Dog_Walk");
         currentCooldownTimer = chargeCooldown;
     }
 
     IEnumerator StunAfterCharge()
     {
         currentState = K9State.Barking;
-        anim.Play("Dog_Idle"); // Pare amețit stând pe loc
+        anim.Play("Dog_Idle");
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(dynamicStunDuration);
         direction *= -1;
         Flip();
         currentState = K9State.Patrol;
         anim.Play("Dog_Walk");
-        currentCooldownTimer = chargeCooldown;
+        currentCooldownTimer = chargeCooldown + 1f;
     }
 
     void Flip()
@@ -247,7 +248,6 @@ public class K9Unit : MonoBehaviour
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) { rb.linearVelocity = Vector2.zero; rb.bodyType = RigidbodyType2D.Static; }
 
-        // --- ANIMATIE OUTRO (SUPARAT) ---
         anim.Play("Dog_Outro");
 
         Collider2D col = GetComponent<Collider2D>();

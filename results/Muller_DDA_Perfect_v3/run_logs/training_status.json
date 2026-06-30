@@ -1,0 +1,65 @@
+{
+    "DDA_Agent": {
+        "checkpoints": [
+            {
+                "steps": 999950,
+                "file_path": "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-999950.onnx",
+                "reward": null,
+                "creation_time": 1779143917.757491,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-999950.pt"
+                ]
+            },
+            {
+                "steps": 1358135,
+                "file_path": "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-1358135.onnx",
+                "reward": 122.1621418595314,
+                "creation_time": 1779146150.3943086,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-1358135.pt"
+                ]
+            },
+            {
+                "steps": 1499994,
+                "file_path": "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-1499994.onnx",
+                "reward": 73.23623368144035,
+                "creation_time": 1779302966.2007463,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-1499994.pt"
+                ]
+            },
+            {
+                "steps": 1999998,
+                "file_path": "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-1999998.onnx",
+                "reward": null,
+                "creation_time": 1779307451.4705527,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-1999998.pt"
+                ]
+            },
+            {
+                "steps": 2000062,
+                "file_path": "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-2000062.onnx",
+                "reward": null,
+                "creation_time": 1779307457.2918468,
+                "auxillary_file_paths": [
+                    "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-2000062.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2000062,
+            "file_path": "results\\Muller_DDA_Perfect_v3\\DDA_Agent.onnx",
+            "reward": null,
+            "creation_time": 1779307457.2918468,
+            "auxillary_file_paths": [
+                "results\\Muller_DDA_Perfect_v3\\DDA_Agent\\DDA_Agent-2000062.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "2.12.0+cpu"
+    }
+}

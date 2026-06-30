@@ -23,7 +23,6 @@ public class MenuAudioManager : MonoBehaviour
 
     void Awake()
     {
-        // Automatically create the sources
         musicSource = gameObject.AddComponent<AudioSource>();
         atmosphereSource = gameObject.AddComponent<AudioSource>();
         sfxSource = gameObject.AddComponent<AudioSource>();
@@ -34,7 +33,6 @@ public class MenuAudioManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // --- ASIGNARE AUTOMATĂ ---
         AutoAssignMixerGroups();
     }
 
@@ -46,13 +44,10 @@ public class MenuAudioManager : MonoBehaviour
             return;
         }
 
-        // Căutăm grupurile în Mixer după numele lor exact
-        // Funcția returnează un array, așa că luăm primul element [0]
         AudioMixerGroup[] musicGroups = mainMixer.FindMatchingGroups("Music");
         AudioMixerGroup[] voicesGroups = mainMixer.FindMatchingGroups("Voices");
         AudioMixerGroup[] sfxGroups = mainMixer.FindMatchingGroups("SFX");
 
-        // Asignăm grupurile surselor corespunzătoare
         if (musicGroups.Length > 0) musicSource.outputAudioMixerGroup = musicGroups[0];
 
         if (voicesGroups.Length > 0)
@@ -67,13 +62,10 @@ public class MenuAudioManager : MonoBehaviour
 
     void Start()
     {
-        // Citim volumul salvat de jucător (default 0.75 dacă e prima rulare)
         float savedMusic = PlayerPrefs.GetFloat("MusicVol", 0.75f);
 
-        // Aplicăm imediat în Mixer-ul din Meniu
         mainMixer.SetFloat("musicVol", Mathf.Log10(Mathf.Max(savedMusic, 0.0001f)) * 20);
 
-        // La fel pentru restul:
         float savedVoices = PlayerPrefs.GetFloat("VoicesVol", 0.75f);
         mainMixer.SetFloat("voicesVol", Mathf.Log10(Mathf.Max(savedVoices, 0.0001f)) * 20);
 
@@ -83,8 +75,8 @@ public class MenuAudioManager : MonoBehaviour
         if (mainMenuMusic != null)
         {
             musicSource.clip = mainMenuMusic; // Punem melodia în "Audio Clip"
-            musicSource.loop = true;          // Ne asigurăm că face loop
-            musicSource.Play();               // Îi dăm drumul
+            musicSource.loop = true;          
+            musicSource.Play();               
         }
 
         if (oldFilmSound != null)
@@ -112,7 +104,6 @@ public class MenuAudioManager : MonoBehaviour
 
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
-            // Facem fade de la volumul actual la -80 (liniște totală)
             float newVol = Mathf.Lerp(currentVol, -80f, t / fadeDuration);
             mainMixer.SetFloat("musicVol", newVol);
             yield return null;

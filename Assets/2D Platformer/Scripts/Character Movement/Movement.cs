@@ -9,7 +9,6 @@ public class Movement : MonoBehaviour
     Rigidbody2D rigidbody2d;
     Vector2 move;
 
-    // --- NOU: Enum-ul pentru direcțiile de țintire ---
     public enum AimDirection { Center, Up, Down, Left, Right, UpRight, UpLeft, DownRight, DownLeft }
     [Header("Aiming System")]
     public AimDirection currentAim = AimDirection.Center;
@@ -19,7 +18,7 @@ public class Movement : MonoBehaviour
     public TextMeshProUGUI healthText;
 
     [Header("Menus")]
-    public GameObject loseMenuObject; // Trage panelul "LoseMenu" aici în Inspector
+    public GameObject loseMenuObject; 
 
     [Header("Player movement")]
     public InputAction MoveAction;
@@ -33,10 +32,10 @@ public class Movement : MonoBehaviour
 
     [Header("Health system")]
     public int maxLives = 3;
-    public int currentLives;
+    public float currentLives;
     private bool isInvincible = false;
     bool isStrictlyTakingDamage;
-    private bool isDead = false; // Siguranță internă pentru cod
+    private bool isDead = false;
 
     [Header("Silksong Gravity System")]
     public float baseGravity = 4f;
@@ -47,7 +46,7 @@ public class Movement : MonoBehaviour
     public Transform groundCheckPoint;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
-    private bool isGrounded;
+    public bool isGrounded;
     private bool wasGrounded;
 
     [Header("Coyote Time")]
@@ -69,8 +68,8 @@ public class Movement : MonoBehaviour
     [Header("Cuphead Shooting System")]
     public GameObject bananaPrefab;
     public Transform firePoint;
-    public Vector2 firePointNormalOffset = new Vector2(0.8f, 0.5f); // Poziția normală (Idle/Run)
-    public Vector2 firePointCrouchOffset = new Vector2(0.8f, 0.1f); // Poziția când e ghemui (mai jos)
+    public Vector2 firePointNormalOffset = new Vector2(0.8f, 0.5f);
+    public Vector2 firePointCrouchOffset = new Vector2(0.8f, 0.1f);
     public float shurikenSize = 0.15f;
     public float fireRate = 0.12f;
     private float nextFireTime = 0f;
@@ -110,7 +109,6 @@ public class Movement : MonoBehaviour
         isDashing = false;
         canDash = true;
 
-        // FORȚĂM motorul fizic să activeze coliziunea între Player (6) și Bule/Boss (7)
         Physics2D.IgnoreLayerCollision(6, 7, false);
     }
 
@@ -127,14 +125,11 @@ public class Movement : MonoBehaviour
         if (isDead) return;
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
 
-        // --- LOGICA DE SUNET PENTRU ATERIZARE ---
         if (isGrounded && !wasGrounded)
         {
-            // Sunetul se va auzi DOAR la impact, o singură dată!
             LevelAudioManager.Instance.PlayPlayerSFX(LevelAudioManager.Instance.monkeyFall, 0.5f);
         }
 
-        // Salvează starea curentă pentru frame-ul următor (pune asta la finalul Update sau după check)
         wasGrounded = isGrounded;
 
         if (isDashing) return;
@@ -147,27 +142,20 @@ public class Movement : MonoBehaviour
             Flip(move.x);
         }
 
-        // --- NOU: Actualizăm direcția în care se uită arma ---
         UpdateAimingState(move.x, move.y);
+        anim.SetFloat("Speed", Mathf.Abs(move.x));
+        anim.SetBool("isGrounded", isGrounded); 
+        anim.SetFloat("yVelocity", rigidbody2d.linearVelocity.y);
 
-        // --- NOU: ANIMATOR - Updatează variabilele continue (în fiecare frame) ---
-        anim.SetFloat("Speed", Mathf.Abs(move.x)); // Viteza (Run/Idle)
-        anim.SetBool("isGrounded", isGrounded); // E pe pământ?
-        anim.SetFloat("yVelocity", rigidbody2d.linearVelocity.y); // Sare sau cade?
-                                                                  // --- MODIFICAT PENTRU RESETARE LAYER ---
         bool isShooting = FireAction.IsPressed();
         anim.SetBool("isShooting", isShooting);
 
-        // 1. Verificăm dacă suntem în starea de TakeDamage pe Base Layer (Index 0)
-        // Asigură-te că animația ta de damage se numește exact "TakeDamage" în Animator
         bool isTakingDamage = anim.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage");
 
-        // 2. Logica de tras: trebuie să apăsăm butonul ȘI să nu fim în damage ȘI să nu fim în dash
         bool canShowBanana = FireAction.IsPressed() && !isStrictlyTakingDamage && !isDashing;
 
         anim.SetBool("isShooting", canShowBanana);
 
-        // 3. Setăm Weight-ul: dacă suntem loviți, forțăm layer-ul de tras la 0 (invizibil)
         int shootingLayerIndex = anim.GetLayerIndex("ShootingLayer");
         if (canShowBanana)
         {
@@ -178,17 +166,12 @@ public class Movement : MonoBehaviour
             anim.SetLayerWeight(shootingLayerIndex, 0f);
         }
 
-        // Trimitem direcția spre Blend Tree-ul nostru de Aiming
         Vector2 aimDir = GetShootDirection();
-        anim.SetFloat("AimX", Mathf.Abs(aimDir.x)); // Absolut pentru că Flip-ul întoarce deja vizual
+        anim.SetFloat("AimX", Mathf.Abs(aimDir.x));
         anim.SetFloat("AimY", aimDir.y);
-        // ------------------------------------------------------------------------
-        // 1. Întâi verificăm dacă suntem pe sol
 
-        // 2. Apoi citim input-ul de Crouch
         bool isCrouching = CrouchAction.ReadValue<float>() > 0.1f;
 
-        // 3. Trimitem la Animator ÎNAINTE de orice altceva
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isCrouching", isCrouching);
 
@@ -227,6 +210,8 @@ public class Movement : MonoBehaviour
         // JUMP BUFFERING
         if (JumpAction.triggered)
         {
+            if (DDA_DataCollector.Instance != null) DDA_DataCollector.Instance.RecordJump();
+
             if (coyoteTimeCounter > 0f)
             {
                 jumpBufferCounter = jumpBufferTime;
@@ -266,7 +251,6 @@ public class Movement : MonoBehaviour
     {
         if (isDashing) return;
 
-        // Dacă ținem apăsat butonul de Aim Lock, viteza orizontală devine 0
         bool isAimLocked = AimLockAction.IsPressed();
         float currentMaxSpeed = isAimLocked ? 0f : (isCrouching ? speed * 0.5f : speed);
         rigidbody2d.linearVelocity = new Vector2(move.x * currentMaxSpeed, rigidbody2d.linearVelocity.y);
@@ -276,7 +260,6 @@ public class Movement : MonoBehaviour
     {
         if (firePoint == null) return;
 
-        // Dacă maimuța este ghemuită, folosim offset-ul de crouch, altfel cel normal
         if (isCrouching)
         {
             firePoint.localPosition = firePointCrouchOffset;
@@ -287,10 +270,9 @@ public class Movement : MonoBehaviour
         }
     }
 
-    // --- NOU: Funcția care citește combinația de taste ---
     void UpdateAimingState(float h, float v)
     {
-        float threshold = 0.5f; // Limita pentru a detecta apăsarea clară a tastei
+        float threshold = 0.5f; 
 
         if (Mathf.Abs(h) < threshold && Mathf.Abs(v) < threshold)
         {
@@ -298,32 +280,29 @@ public class Movement : MonoBehaviour
             return;
         }
 
-        if (h > threshold) // Apasă Dreapta
+        if (h > threshold)
         {
             if (v > threshold) currentAim = AimDirection.UpRight;
             else if (v < -threshold) currentAim = AimDirection.DownRight;
             else currentAim = AimDirection.Right;
         }
-        else if (h < -threshold) // Apasă Stânga
+        else if (h < -threshold)
         {
             if (v > threshold) currentAim = AimDirection.UpLeft;
             else if (v < -threshold) currentAim = AimDirection.DownLeft;
             else currentAim = AimDirection.Left;
         }
-        else // Apasă Doar Vertical
+        else 
         {
             if (v > threshold) currentAim = AimDirection.Up;
             else if (v < -threshold) currentAim = AimDirection.Down;
         }
     }
 
-    // --- NOU: Funcția care calculează vectorul corect de zbor ---
     Vector2 GetShootDirection()
     {
-        // 1. Verificăm dacă ții apăsat butonul de Aim Lock (Ctrl)
         bool isAimLocked = AimLockAction.IsPressed();
 
-        // 2. Definim direcția implicită: drept în față (stânga sau dreapta)
         Vector2 forwardDir = new Vector2(Mathf.Sign(transform.localScale.x), 0);
         Vector2 dir = forwardDir;
 
@@ -332,8 +311,6 @@ public class Movement : MonoBehaviour
             case AimDirection.Up: dir = Vector2.up; break;
 
             case AimDirection.Down:
-                // Trage în jos DOAR dacă ții apăsat Ctrl. 
-                // Altfel, vei sta aplecat (Crouch) și vei trage drept în față.
                 if (isAimLocked) dir = Vector2.down;
                 else dir = forwardDir;
                 break;
@@ -344,8 +321,6 @@ public class Movement : MonoBehaviour
             case AimDirection.UpLeft: dir = new Vector2(-1f, 1f); break;
 
             case AimDirection.DownRight:
-                // Trage pe diagonală jos DOAR dacă ții apăsat Ctrl.
-                // Dacă doar alergi spre dreapta și apeși și în jos, gloanțele merg drept.
                 if (isAimLocked) dir = new Vector2(1f, -1f);
                 else dir = Vector2.right;
                 break;
@@ -360,14 +335,14 @@ public class Movement : MonoBehaviour
                 break;
         }
 
-        return dir.normalized; // Returnăm mereu vectorul normalizat pentru viteză constantă
+        return dir.normalized;
     }
 
     void PerformParryAction()
     {
+        isDoubleJumping = true;
         if (hasParriedInAir) return;
 
-        // 1. Scanăm zona pentru obiecte parabile
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, parryRadius);
         bool hitSomething = false;
         TicketProjectile targetTicket = null;
@@ -387,27 +362,20 @@ public class Movement : MonoBehaviour
             }
         }
 
-        // 2. Trimitem datele către Animator ÎNAINTE de Trigger
         anim.SetBool("isSuccessfulParry", hitSomething);
         anim.SetTrigger("Parry");
-        anim.Update(0); // Forțăm tranziția instantanee
+        anim.Update(0); 
 
-        // 3. Executăm logica fizică
         if (hitSomething)
         {
-            hasParriedInAir = false; // Resetăm pentru chained parries
+            hasParriedInAir = false; 
             rigidbody2d.linearVelocity = new Vector2(rigidbody2d.linearVelocity.x, parryBoostForce);
 
-            // Spunem biletului să plece spre boss
             targetTicket.Parry();
-
-            // OPȚIONAL: Micul flash verde de care vorbeam
-            // StartCoroutine(DebugColor(Color.green));
         }
         else
         {
-            hasParriedInAir = true; // A ratat, blocăm alte încercări
-                                    // StartCoroutine(DebugColor(Color.red));
+            hasParriedInAir = true; 
         }
     }
 
@@ -423,23 +391,23 @@ public class Movement : MonoBehaviour
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null)
         {
-            sr.color = Color.white; // Flash alb
+            sr.color = Color.white;
             yield return new WaitForSeconds(0.05f);
-            sr.color = Color.gray; // Întoarcere rapidă spre normal
+            sr.color = Color.gray;
             yield return new WaitForSeconds(0.05f);
-            sr.color = Color.white; // Normal
+            sr.color = Color.white;
         }
     }
 
     void Flip(float horizontalInput)
     {
         float direction = (horizontalInput > 0) ? 1 : -1;
-        // Modificăm doar X-ul pentru întoarcere, lăsăm restul cum e
         transform.localScale = new Vector3(direction * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 
     void Jump()
     {
+
         rigidbody2d.linearVelocity = new Vector2(rigidbody2d.linearVelocity.x, jumpForce);
         isGrounded = false;
         coyoteTimeCounter = 0f;
@@ -451,7 +419,11 @@ public class Movement : MonoBehaviour
     {
         if (other.CompareTag("Boss") && !isInvincible)
         {
-            TakeDamage();
+            TakeDamage("Müller_Melee");
+        }
+        else if (other.CompareTag("Parryable") && !isInvincible)
+        {
+            TakeDamage("Ticket_Bomb");
         }
     }
 
@@ -459,13 +431,11 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Car") && !isInvincible)
         {
-            TakeDamage();
+            TakeDamage("Car_Obstacle");
         }
 
-        // Verificăm dacă suntem pe o platformă mobilă
         if (collision.gameObject.GetComponent<MovingTaraba>() != null)
         {
-            // Verificăm dacă picioarele maimuței sunt deasupra (normal.y > 0.5)
             if (collision.contacts.Length > 0 && collision.contacts[0].normal.y > 0.5f)
             {
                 transform.SetParent(collision.transform);
@@ -475,19 +445,14 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        // VERIFICARE DE SIGURANȚĂ:
-        // Verificăm dacă scriptul este încă activ și dacă obiectul nu este în curs de distrugere
         if (this.gameObject.activeInHierarchy && transform.parent == collision.transform)
         {
             transform.SetParent(null);
         }
     }
 
-    // Adăugăm și această funcție pentru siguranță maximă
     private void OnDisable()
     {
-        // Dacă jucătorul moare sau este dezactivat, îl scoatem de sub părinte 
-        // pentru a evita erorile de ierarhie
         transform.SetParent(null);
     }
 
@@ -518,14 +483,16 @@ public class Movement : MonoBehaviour
     {
         isCrouching = false;
         anim.SetBool("isCrouching", false);
-        // ȘTERGE linia cu transform.localScale de aici!
         playerCollider.size = standColliderSize;
         playerCollider.offset = standColliderOffset;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(string damageSource)
     {
         if (currentLives <= 0 || isInvincible) return;
+
+        if (DDA_DataCollector.Instance != null)
+            DDA_DataCollector.Instance.RecordDamage(1, damageSource, transform.position);
 
         anim.SetTrigger("TakeDamage");
 
@@ -559,11 +526,9 @@ public class Movement : MonoBehaviour
     {
         isStrictlyTakingDamage = true;
 
-        // Forțăm Weight 0 imediat
         int shootingLayerIndex = anim.GetLayerIndex("ShootingLayer");
         anim.SetLayerWeight(shootingLayerIndex, 0f);
 
-        // Așteptăm cât durează animația ta de damage (ex: 0.3 secunde)
         yield return new WaitForSeconds(0.3f);
 
         isStrictlyTakingDamage = false;
@@ -571,48 +536,54 @@ public class Movement : MonoBehaviour
 
     void GameOver()
     {
-        if (isDead) return; // Siguranță să nu apelăm de două ori
-        isDead = true; // Blochează Update-ul imediat
+        if (isDead) return; 
+        isDead = true; 
 
         Debug.Log("GAME OVER: The Monkey was arrested!");
+        DDA_BulletproofExporter.ExportEvent("MOARTE");
 
         LevelAudioManager.Instance.PlayPlayerSFX(LevelAudioManager.Instance.monkeyDefeat, 0.8f);
 
-        // 1. Activăm animația de moarte
         anim.Play("Monkey_Die", 0, 0f);
         anim.SetBool("isDead", true);
-
-        // 2. STINGEM ShootingLayer-ul (ca să nu mai stea cu banana în mână când moare)
         int shootingLayerIndex = anim.GetLayerIndex("ShootingLayer");
         if (shootingLayerIndex != -1) anim.SetLayerWeight(shootingLayerIndex, 0f);
 
-        // 3. Oprim scriptul de mișcare (deja aveai asta)
         this.enabled = false;
 
         rigidbody2d.linearVelocity = new Vector2(0, rigidbody2d.linearVelocity.y);
 
-        // Ignorăm coliziunile cu inamicii (Layer-ul 7 de obicei e inamic, ajustează dacă e cazul)
-        // Sau pur și simplu îi punem un tag de "Dead" și verificăm în inamici
-        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast"); // Nu mai este detectată de inamici
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
         StartCoroutine(ShowLoseScreenWithDelay());
     }
 
     IEnumerator ShowLoseScreenWithDelay()
     {
-        Debug.Log("S-a apelat GameOver!");
-        yield return new WaitForSecondsRealtime(1.5f); // Așteptăm 1.5 secunde
+        if (Unity.MLAgents.Academy.Instance.IsCommunicatorOn)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            if (DDA_DataCollector.Instance != null)
+            {
+                DDA_DataCollector.Instance.RecordDeath();
+            }
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+            yield break;
+        }
+
+        yield return new WaitForSeconds(2.0f);
 
         if (loseMenuObject != null)
         {
             loseMenuObject.SetActive(true);
-            Time.timeScale = 0f; // Înghețăm jocul
+            Time.timeScale = 0f; 
 
-            // Trimitem datele către Slider
-            BossController boss = Object.FindFirstObjectByType<BossController>();
-            if (boss != null)
+            BossController bossScript = Object.FindFirstObjectByType<BossController>();
+            if (bossScript != null)
             {
-                loseMenuObject.GetComponent<LoseMenu>().ShowProgress(boss.currentHealth, boss.maxHealth);
+                loseMenuObject.GetComponent<LoseMenu>().ShowProgress(bossScript.currentHealth, bossScript.maxHealth);
             }
         }
     }
@@ -622,13 +593,11 @@ public class Movement : MonoBehaviour
         isInvincible = true;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
 
-        // În loc de o transparență fixă, facem un efect de "pulse" (ca în Silksong)
         float timer = 0f;
         float duration = 1.5f;
 
         while (timer < duration)
         {
-            // Oscilăm transparența între 0.3 și 0.7 pentru un efect de "fantomă"
             if (sr != null)
             {
                 float alpha = Mathf.PingPong(Time.time * 10f, 0.4f) + 0.3f;
@@ -636,10 +605,10 @@ public class Movement : MonoBehaviour
             }
 
             timer += Time.deltaTime;
-            yield return null; // Așteptăm următorul cadru
+            yield return null;
         }
 
-        if (sr != null) sr.color = Color.white; // Revenim la normal
+        if (sr != null) sr.color = Color.white;
         isInvincible = false;
     }
 
@@ -649,12 +618,19 @@ public class Movement : MonoBehaviour
         isDashing = true;
         isInvincible = true;
 
+        BossController boss = Object.FindFirstObjectByType<BossController>();
+        if (boss != null && DDA_DataCollector.Instance != null)
+        {
+            float dist = Vector3.Distance(transform.position, boss.transform.position);
+            DDA_DataCollector.Instance.RecordDashAccuracy(dist);
+        }
+
         anim.SetTrigger("Dash");
 
         LevelAudioManager.Instance.PlayPlayerSFX(LevelAudioManager.Instance.monkeyDash, 0.5f);
-        // 1. START DASH: Poof + Dispare
         Instantiate(poofEffectPrefab, transform.position, Quaternion.identity);
-        spriteRenderer.enabled = false; // Maimuța devine invizibilă
+        spriteRenderer.enabled = false;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Character"), LayerMask.NameToLayer("separat"), true);
 
         float originalGravity = rigidbody2d.gravityScale;
         rigidbody2d.gravityScale = 0f;
@@ -667,13 +643,14 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(dashDuration);
 
         rigidbody2d.linearVelocity = Vector2.zero;
-        spriteRenderer.enabled = true; // Maimuța reapare
+        spriteRenderer.enabled = true;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Character"), LayerMask.NameToLayer("separat"), false);
         rigidbody2d.gravityScale = originalGravity;
 
         Instantiate(poofEffectPrefab, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.1f);
 
-        isInvincible = false; // DEZACTIVĂM
+        isInvincible = false;
         Physics2D.IgnoreLayerCollision(6, 7, false);
         isDashing = false;
 
@@ -681,7 +658,6 @@ public class Movement : MonoBehaviour
         canDash = true;
     }
 
-    // --- MODIFICAT: Acum aruncă în funcție de vectorul de țintire ---
     void ThrowBanana()
     {
         LevelAudioManager.Instance.PlayPlayerSFX(LevelAudioManager.Instance.bananaThrow, 0.2f);
@@ -696,8 +672,6 @@ public class Movement : MonoBehaviour
             bananarb.linearVelocity = shootDirection * projectileSpeed;
         }
 
-        // Rotim banana ca să se uite vizual în direcția corectă (sus/jos)
-        // Calculăm unghiul în grade pe baza vectorului de direcție
         float angle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
         banana.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }

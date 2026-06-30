@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 public class BossController : MonoBehaviour
 {
@@ -11,11 +10,16 @@ public class BossController : MonoBehaviour
     private SpriteRenderer bossSR;
     private Animator anim;
 
-    private bool isTransitioning = false; // Blochează Update-ul în timpul animațiilor de tranziție
-    private bool isPreparingToTransition = false; // Spune boss-ului să aștepte
+    private bool isTransitioning = false; 
+    private bool isPreparingToTransition = false; 
     private Coroutine flashCoroutine;
 
     private StageManager stageManager;
+
+    [Header("DDA Integration")]
+    public float baseAttackSpeed = 2.0f; 
+    public float currentDDA = 1.0f; 
+    private float lockedDDAForCurrentAttack = 1.0f; 
 
     [Header("Stats")]
     public float maxHealth = 100f;
@@ -23,20 +27,20 @@ public class BossController : MonoBehaviour
     public float teleportThreshold = 0.9f;
 
     [Header("RL Controlled Variables")]
-    public float attackSpeed = 2.0f; // RL can change this!
-    public float moveSpeed = 5.0f;   // RL can change this!
+    public float attackSpeed = 2.0f;
+    public float moveSpeed = 5.0f; 
 
     [Header("Stage 1 - Breathalyzer")]
     public GameObject bubblePrefab;
     public float bubbleUp = 0.7f;
     public float bubbleDown = -0.7f;
-    private bool phase2Triggered = false; //trigger for teleportation
+    private bool phase2Triggered = false; 
     private bool isStage1Attacking = false;
     private float timer;
 
     [Header("Teleport Settings")]
     public GameObject markerPrefab;
-    public Transform playerTransform; // Drag the Monkey here
+    public Transform playerTransform; 
     public float teleportCooldown = 5f;
     private float teleportTimer;
     private bool isTeleporting = false;
@@ -45,20 +49,20 @@ public class BossController : MonoBehaviour
     [Header("Stage 2 - Spike Strip")]
     public GameObject spikesPrefab;
     public float arenaWidth = 11.5f;
-    public float groundY = -5.3f; // Adjust to your actual floor height
+    public float groundY = -5.3f; 
     public float flyHeight = 3.0f;
     public float perspectiveLimitY = 6.0f;
     public float dashCooldown = 2f;
     private float currentDashTimer;
     private bool isDashing = false;
     public GameObject shockwavePrefab;
-    private int stage2AttackStep = 0; // 0 = Zbor cu spini, 1 = Stomp, 2 = Alt Stomp
+    private int stage2AttackStep = 0;
     private bool isStage2Attacking = false;
 
-    [Range(0f, 1f)] public float spikeSpawnChance = 0.6f; // 60% șansă per slot de a genera un spin
-    public float spikeWidth = 1.2f; // Cât spațiu ocupă fizic un spin (ajustează dacă modelul e mai mare)
-    public int edgePaddingSlots = 2; // Câte sloturi goale lăsăm MEREU la marginile arenei
-    public int minGapSlots = 1;      // Câte sloturi goale lăsăm obligatoriu DUPĂ un spin generat
+    [Range(0f, 1f)] public float spikeSpawnChance = 0.6f;
+    public float spikeWidth = 1.2f;
+    public int edgePaddingSlots = 2;
+    public int minGapSlots = 1;
 
     [Header("Stage 3 Settings")]
     public GameObject k9Prefab;
@@ -67,18 +71,21 @@ public class BossController : MonoBehaviour
     public int maxBombsPerPass = 3;
     private float bombTimer;
     private float movementTargetX;
-    private int totalStage3Bombs = 0; // Numără bombele aruncate în Faza 3
+    private int totalStage3Bombs = 0;
     private int bombsSinceLastPurple = 0;
-    private K9Unit spawnedK9; // Salvăm scriptul câinelui aici
+    private K9Unit spawnedK9;
     private bool tutorialStarted = false;
 
     void Start()
     {
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
+
         currentHealth = maxHealth;
         timer = attackSpeed;
         transform.position = new Vector3(7.5f, transform.position.y, 0);
         bossSR = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>(); // Inițializare animator
+        anim = GetComponent<Animator>();
         rope = GetComponent<LineRenderer>();
         rope.enabled = false;
 
@@ -94,9 +101,8 @@ public class BossController : MonoBehaviour
     IEnumerator HandleIntroSequence()
     {
         isTransitioning = true;
-        // 2. Scrisul (Write) - Putem folosi StartLoop dacă scrie mult timp
         LevelAudioManager.Instance.StartLoop(LevelAudioManager.Instance.mullerWrite, 0.5f);
-        yield return new WaitForSeconds(4.5f); // Timpul animației de Intro (Whistle + Write)
+        yield return new WaitForSeconds(4.5f);
         isTransitioning = false;
     }
 
@@ -107,9 +113,7 @@ public class BossController : MonoBehaviour
 
     void Update()
     {
-        // 1. Check for Phase Transitions based on Health
         UpdatePhases();
-        float healthPercent = currentHealth / maxHealth;
         if (currentPhase != BossPhase.Defeated)
         {
             ApplyPerspectiveScale();
@@ -117,7 +121,6 @@ public class BossController : MonoBehaviour
 
         if (isTransitioning) return;
 
-        // 2. Run the logic for the current phase
         switch (currentPhase)
         {
             case BossPhase.Stage1_Projectiles:
@@ -146,10 +149,9 @@ public class BossController : MonoBehaviour
 
         if (targetPhase != currentPhase)
         {
-            // Așteptăm să termine orice acțiune curentă
             if (isStage1Attacking || isStage2Attacking || isDashing || isTeleporting)
             {
-                isPreparingToTransition = true; // Müller știe că trebuie să se oprească după ce termină atacul
+                isPreparingToTransition = true;
                 return;
             }
 
@@ -172,79 +174,81 @@ public class BossController : MonoBehaviour
         }
     }
 
+    float GetDifficultyFactor()
+    {
+        float phaseMinHP = 0f;
+        float phaseMaxHP = 1f;
+
+        if (currentPhase == BossPhase.Stage1_Projectiles) { phaseMinHP = 0.66f; phaseMaxHP = 1.0f; }
+        else if (currentPhase == BossPhase.Stage2_Dash) { phaseMinHP = 0.33f; phaseMaxHP = 0.66f; }
+        else if (currentPhase == BossPhase.Stage3_Chaos) { phaseMinHP = 0.0f; phaseMaxHP = 0.33f; }
+
+        float healthPercent = currentHealth / maxHealth;
+        float factor = 1f - Mathf.InverseLerp(phaseMinHP, phaseMaxHP, healthPercent);
+        float finalFactor = (factor + currentDDA) / 2f;
+        return Mathf.Clamp01(finalFactor);
+    }
+
+    public void ApplyDDAMultiplier(float multiplier)
+    {
+        currentDDA = Mathf.Clamp(multiplier, 0.5f, 1.5f);
+        float calculatedAttackSpeed = baseAttackSpeed / currentDDA;
+        attackSpeed = calculatedAttackSpeed;
+    }
+
     void ApplyPerspectiveScale()
     {
-        // Aceste valori pot fi scoase ca variabile publice dacă vrei să le reglezi din Inspector
         float minScale = 1.35f;
         float maxScale = 1.75f;
-
-        // Calculăm factorul de înălțime
-        // groundY e podeaua, flyHeight e punctul maxim de sus
         float heightFactor = Mathf.InverseLerp(groundY, perspectiveLimitY, transform.position.y);
-
-        // Calculăm mărimea țintă
         float targetScale = Mathf.Lerp(maxScale, minScale, heightFactor);
-
-        // Păstrăm direcția în care privește boss-ul
         float flipDir = transform.localScale.x > 0 ? 1 : -1;
 
-        // Aplicăm scara
         transform.localScale = new Vector3(targetScale * flipDir, targetScale, 1f);
     }
 
-    // --- PHASE BEHAVIORS ---
-    // --- PHASE 1 ---
     void Stage1_Behavior()
     {
         HandleLookingAtPlayer();
 
-        // Adăugăm "&& !isPreparingToTransition" aici:
         if (!isStage1Attacking && !isTeleporting && !isPreparingToTransition)
         {
             StartCoroutine(Stage1AttackSequence());
         }
     }
 
+    // 
+
     IEnumerator Stage1AttackSequence()
     {
         isStage1Attacking = true;
-
-        // 1. PAUZĂ (Cooldown între acțiuni - controlat de RL prin attackSpeed)
         yield return new WaitForSeconds(attackSpeed);
         if (isTeleporting) yield break;
 
-        // 2. AVERTIZARE: Scoate arma!
+        lockedDDAForCurrentAttack = currentDDA;
         anim.SetTrigger("Shoot");
-        Color baseColor = bossSR.color;
 
-        // 3. TRAGE 4 BULE (Burst Fire)
         for (int i = 0; i < 4; i++)
         {
             if (isTeleporting) yield break;
 
             SpawnBubble();
-            yield return new WaitForSeconds(0.85f); // Timpul dintre gloanțe (fire rate)
+            float df = GetDifficultyFactor();
+            float dynamicFireRate = Mathf.Lerp(1.6f, 0.8f, df);
+            float finalFireRate = dynamicFireRate / lockedDDAForCurrentAttack;
+            yield return new WaitForSeconds(Mathf.Clamp(finalFireRate, 0.5f, 2.0f));
         }
 
-        // O mică pauză după ce a tras ca să nu sară instantaneu cu grappling hook-ul
         yield return new WaitForSeconds(0.5f);
 
-        // 4. GRAPPLING HOOK (Fostul Teleport)
-        // Verificăm dacă i-am dat destul damage ca să înceapă să se miște
         if (currentHealth / maxHealth <= teleportThreshold)
         {
             if (!phase2Triggered)
             {
                 anim.SetTrigger("Grapple");
-                Debug.Log("BOSS: Health below 90%! Initiating Grappling Hook Phase.");
                 phase2Triggered = true;
             }
-
-            StartTeleportProcess(); // Asta va seta isTeleporting = true
-
-            // Corutina se termină aici. 
-            // isStage1Attacking devine false, dar Faza 1 nu va reîncepe până când 
-            // marker-ul nu apelează ExecuteTeleport() și face isTeleporting = false!
+            StartTeleportProcess();
         }
 
         isStage1Attacking = false;
@@ -254,35 +258,30 @@ public class BossController : MonoBehaviour
     {
         anim.Play("Muller_BlowBubble", 0, 0f);
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerBubbleSpawn, 0.6f);
-        float spawnY;
-        if (Random.value > 0.5f)
-        {
-            spawnY = bubbleUp;
-        }
-        else
-        {
-            spawnY = bubbleDown;
-        }
-        Vector3 spawnPos = new Vector3(transform.position.x - 1f, spawnY, 0);
+        float spawnY = (Random.value > 0.5f) ? bubbleUp : bubbleDown;
+
+        Vector3 spawnPos = new Vector3(transform.position.x - (transform.localScale.x > 0 ? 1f : -1f), spawnY, 0);
         GameObject bubble = Instantiate(bubblePrefab, spawnPos, Quaternion.identity);
 
-        float dir = (transform.localScale.x > 0) ? 1f : -1f;
-        bubble.GetComponent<StopSignBubble>().moveDirection = dir;
+        float df = GetDifficultyFactor();
+        float dynamicSpeed = Mathf.Lerp(4.5f, 8.5f, df);
 
-        Debug.Log("BOSS: Blowing Stop-Sign Bubble!");
+        StopSignBubble bubbleScript = bubble.GetComponent<StopSignBubble>();
+        if (bubbleScript != null)
+        {
+            float finalSpeed = dynamicSpeed * lockedDDAForCurrentAttack;
+            bubbleScript.moveSpeed = Mathf.Max(3.5f, finalSpeed);
+            bubbleScript.moveDirection = (transform.localScale.x > 0) ? 1f : -1f;
+        }
     }
 
     void HandleLookingAtPlayer()
     {
-        if (isTeleporting || isDashing) return; // Don't flip while mid-teleport
+        if (isTeleporting || isDashing) return;
 
         if (playerTransform != null)
         {
-            // Check if player is to the left or right of the boss
             float direction = (playerTransform.position.x < transform.position.x) ? 1 : -1;
-
-            // Apply scale (assuming your boss's default 'Forward' is Left)
-            // If your boss faces Right by default, swap the 'direction' logic
             float targetScale = Mathf.Abs(transform.localScale.x);
             transform.localScale = new Vector3(direction * targetScale, transform.localScale.y, transform.localScale.z);
         }
@@ -291,10 +290,8 @@ public class BossController : MonoBehaviour
     void StartTeleportProcess()
     {
         isTeleporting = true;
-
         List<float> possibleSpots = new List<float> { -arenaWidth, 0f, arenaWidth };
 
-        // Găsim punctul cel mai apropiat de unde stă Müller acum și îl scoatem din listă
         float currentX = transform.position.x;
         float closestSpot = possibleSpots[0];
         foreach (float s in possibleSpots)
@@ -303,52 +300,27 @@ public class BossController : MonoBehaviour
         }
         possibleSpots.Remove(closestSpot);
 
-        // Alegem dintre punctele rămase (Müller se va muta garantat)
         float targetX = possibleSpots[Random.Range(0, possibleSpots.Count)];
-        Vector3 targetPos = new Vector3(targetX, groundY, 0); // Folosește groundY fix
+        Vector3 targetPos = new Vector3(targetX, groundY, 0);
 
         GameObject marker = Instantiate(markerPrefab, targetPos, Quaternion.identity);
         marker.GetComponent<TeleportMarker>().Setup(this);
     }
 
-    public void PlayHarpoonShotSound()
-    {
-        // Sunet de impact pe canalul de Boss
-        LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerHarpoon, 0.8f);
-    }
-
-    public void PlayHarpoonFlightSound()
-    {
-        // Sunet de impact pe canalul de Boss
-        LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerHarpoonFlight, 0.7f);
-    }
-
-    public void PlayHarpoonFallSound()
-    {
-        // Sunet de impact pe canalul de Boss
-        LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerHarpoonFall, 0.5f);
-    }
-
-    public void PlayAngryDuckSound()
-    {
-        // Sunet de impact pe canalul de Boss
-        LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerDuckAngry, 0.95f);
-    }
+    public void PlayHarpoonShotSound() => LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerHarpoon, 0.8f);
+    public void PlayHarpoonFlightSound() => LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerHarpoonFlight, 0.7f);
+    public void PlayHarpoonFallSound() => LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerHarpoonFall, 0.5f);
+    public void PlayAngryDuckSound() => LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerDuckAngry, 0.95f);
 
     public void ExecuteTeleport(Vector3 newPos)
     {
-        // 1. Oprim forțat corutina de atac cu bule ca să nu mai trimită triggere
         StopAllCoroutines();
         isStage1Attacking = false;
 
-        // 2. CURĂȚĂM Animatorul de orice trigger "Shoot" care a rămas blocat în coadă
         anim.ResetTrigger("Shoot");
-        anim.ResetTrigger("Grapple"); // Îl resetăm și pe ăsta ca să fim siguri
-
-        // 3. Îl forțăm să intre în Idle (Bloated) pentru un cadru, ca să ucidem orice altă animație
+        anim.ResetTrigger("Grapple");
         anim.Play("Muller_Bloated", 0, 0f);
 
-        // 4. Pornim mișcarea nouă
         StartCoroutine(GrapplingMovement(newPos));
     }
 
@@ -356,42 +328,30 @@ public class BossController : MonoBehaviour
     {
         isTeleporting = true;
 
-        // --- LOGICA DE PRIVIRE ---
         float flyDirection = (destination.x < transform.position.x) ? 1 : -1;
         float currentScaleSize = Mathf.Abs(transform.localScale.x);
         transform.localScale = new Vector3(flyDirection * currentScaleSize, transform.localScale.y, transform.localScale.z);
 
-        // 1. SHOT (La sol)
-        // Folosim Play în loc de SetTrigger pentru a forța animația să apară MEREU
         anim.Play("Muller_GrapplingShot", 0, 0f);
-        // ACTIVĂM SFOARA
         rope.enabled = true;
         rope.positionCount = 2;
-        Vector3 ceilingPos = new Vector3(transform.position.x, 5.5f, 0);
-        Vector3 ceilingDest = new Vector3(destination.x, ceilingPos.y, 0);
+        Vector3 ceilingDest = new Vector3(destination.x, 5.5f, 0);
 
         rope.SetPosition(0, transform.position + new Vector3(0, 3f, 0));
         rope.SetPosition(1, ceilingDest);
 
-        // Așteptăm să vedem brațul/arma (ajustează timpul dacă e prea lung/scurt)
         yield return new WaitForSeconds(0.6f);
 
-        // 2. JUMP (Decolarea)
         anim.Play("Muller_GrapplingJump", 0, 0f);
 
-        // 3. TRANVERSAREA
         while (Vector3.Distance(transform.position, ceilingDest) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, ceilingDest, 15f * Time.deltaTime);
-
-            // Sfoara rămâne prinsă de punctul fix de pe tavan în timp ce Müller alunecă
             rope.SetPosition(0, transform.position + new Vector3(0, 3f, 0));
             rope.SetPosition(1, ceilingDest);
-
             yield return null;
         }
 
-        // 4. FALL (Căderea)
         anim.Play("Muller_GrapplingFall", 0, 0f);
         rope.enabled = false;
 
@@ -401,7 +361,6 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // 5. IMPACT
         transform.position = destination;
         anim.SetTrigger("Land");
         yield return new WaitForSeconds(0.1f);
@@ -410,14 +369,10 @@ public class BossController : MonoBehaviour
 
     IEnumerator PhaseTransitionToStage2()
     {
-        Debug.Log("!!! TRANZITIE PORNIȚA !!!");
         isTransitioning = true;
-
-        // Dezactivăm orice altceva ar putea mișca boss-ul
         isTeleporting = true;
         isStage1Attacking = false;
 
-        // IMPORTANT: Facem boss-ul imun la fizică pe timpul zborului
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.bodyType = RigidbodyType2D.Kinematic;
 
@@ -425,7 +380,6 @@ public class BossController : MonoBehaviour
         anim.Play("Muller_Bloated");
         yield return new WaitForSeconds(1.5f);
 
-        // 1. SHOT
         anim.Play("Muller_GrapplingShot", 0, 0f);
 
         float targetX = (transform.position.x > 0) ? -8f : 8f;
@@ -438,43 +392,36 @@ public class BossController : MonoBehaviour
 
         rope.enabled = true;
         rope.positionCount = 2;
-        Vector3 handPos = transform.position + new Vector3(0, 3f, 0);
-        rope.SetPosition(0, handPos);
+        rope.SetPosition(0, transform.position + new Vector3(0, 3f, 0));
         rope.SetPosition(1, ceilingDest);
 
         yield return new WaitForSeconds(0.6f);
 
-        // 2. JUMP (Zborul pe diagonală)
         anim.Play("Muller_TransitionJump", 0, 0f);
-        Debug.Log("Muller ar trebui să zboare acum spre: " + ceilingDest);
 
-        // Folosim un timer de siguranță ca să nu înghețe jocul niciodată
-        float timer = 0;
-        while (Vector3.Distance(transform.position, ceilingDest) > 0.5f && timer < 3f)
+        float setupTimer = 0;
+        while (Vector3.Distance(transform.position, ceilingDest) > 0.5f && setupTimer < 3f)
         {
-            timer += Time.deltaTime;
+            setupTimer += Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, ceilingDest, 18f * Time.deltaTime);
             rope.SetPosition(0, transform.position + new Vector3(0, 3f, 0));
             rope.SetPosition(1, ceilingDest);
             yield return null;
         }
 
-        // 3. FALL
-        Debug.Log("Muller a ajuns la perete, acum cade.");
         transform.position = ceilingDest;
         rope.enabled = false;
         anim.Play("Muller_TransitionFall", 0, 0f);
         yield return new WaitForSeconds(0.3f);
 
-        timer = 0;
-        while (Vector3.Distance(transform.position, floorDest) > 0.1f && timer < 3f)
+        setupTimer = 0;
+        while (Vector3.Distance(transform.position, floorDest) > 0.1f && setupTimer < 3f)
         {
-            timer += Time.deltaTime;
+            setupTimer += Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, floorDest, 15f * Time.deltaTime);
             yield return null;
         }
 
-        // 4. FINAL
         transform.position = floorDest;
         anim.Play("Muller_TransitionFinal", 0, 0f);
 
@@ -491,78 +438,61 @@ public class BossController : MonoBehaviour
         {
             float latestDir = (playerTransform.position.x < transform.position.x) ? 1 : -1;
             transform.localScale = new Vector3(latestDir * scaleSize, transform.localScale.y, transform.localScale.z);
-
             timerIgnite += Time.deltaTime;
             yield return null;
         }
 
-        // --- REPORNIRE LOGICĂ JOC ---
-        if (rb != null) rb.bodyType = RigidbodyType2D.Dynamic; // Resetăm fizica la loc
+        if (rb != null) rb.bodyType = RigidbodyType2D.Dynamic;
 
-        currentPhase = BossPhase.Stage2_Dash; // ABIA ACUM SCHIMBĂM FAZA
+        currentPhase = BossPhase.Stage2_Dash;
         isTeleporting = false;
         isTransitioning = false;
 
-        Debug.Log("!!! TRANZITIE TERMINATĂ !!!");
         if (rb != null) rb.bodyType = RigidbodyType2D.Kinematic;
+
+        currentDashTimer = 2.5f;
+        stage2AttackStep = 0;
     }
 
-    // Apelată automat de evenimentul din animație
-    public void PlayBonkSound()
-    {
-        // Sunet de impact pe canalul de Boss
-        LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerTransition1Bonk, 0.8f);
-    }
+    public void PlayBonkSound() => LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerTransition1Bonk, 0.8f);
 
-    // --- PHASE 2 ---
     void Stage2_Behavior()
     {
-        if (isDashing) return; // Dacă deja dă dash, nu facem altceva
+        if (isDashing) return;
 
         currentDashTimer -= Time.deltaTime;
 
         if (currentDashTimer <= 0 && !isPreparingToTransition)
         {
-            if (stage2AttackStep == 0)
-            {
-                StartCoroutine(JetpackSpikeRun());
-            }
-            else if (stage2AttackStep == 1 || stage2AttackStep == 2)
-            {
-                StartCoroutine(TargetedStompAttack());
-            }
-            else if (stage2AttackStep == 3)
-            {
-                StartCoroutine(GroundSweepDash());
-            }
-            else if (stage2AttackStep == 4 || stage2AttackStep == 5)
-            {
-                StartCoroutine(TargetedStompAttack());
-            }
+            if (stage2AttackStep == 0) StartCoroutine(JetpackSpikeRun());
+            else if (stage2AttackStep == 1 || stage2AttackStep == 2) StartCoroutine(TargetedStompAttack());
+            else if (stage2AttackStep == 3) StartCoroutine(GroundSweepDash());
+            else if (stage2AttackStep == 4 || stage2AttackStep == 5) StartCoroutine(TargetedStompAttack());
 
             stage2AttackStep++;
-            if (stage2AttackStep > 5) stage2AttackStep = 0; // Resetăm combo-ul
+            if (stage2AttackStep > 5)
+            {
+                stage2AttackStep = 0;
+                currentDashTimer = 5.0f;
+                anim.Play("Muller_MadDown", 0, 0f);
+            }
         }
     }
 
-    private System.Collections.Generic.List<Vector3> CalculateSpikePositions()
+    private List<Vector3> CalculateSpikePositions()
     {
-        System.Collections.Generic.List<Vector3> positions = new System.Collections.Generic.List<Vector3>();
-
+        List<Vector3> positions = new List<Vector3>();
         float safeSpikeWidth = Mathf.Max(0.8f, spikeWidth);
-        int padding = Mathf.Max(0, edgePaddingSlots); // Am scos limita minimă de 1. Acum poți pune 0 din Inspector!
+        int padding = Mathf.Max(0, edgePaddingSlots);
         int gap = Mathf.Max(1, minGapSlots);
         float safeChance = Mathf.Clamp01(spikeSpawnChance);
 
-        // Adăugăm o ușoară variație la pornire ca grila să nu fie mereu în același loc
         float randomOffset = Random.Range(-safeSpikeWidth * 0.3f, safeSpikeWidth * 0.3f);
-
         float totalWidth = arenaWidth * 2f;
         int totalSlots = Mathf.FloorToInt(totalWidth / safeSpikeWidth);
 
         if (totalSlots <= padding * 2) return positions;
 
-        // StartX include acum acel Offset randomizat
         float startX = -arenaWidth + (safeSpikeWidth / 2f) + randomOffset;
         int currentSlot = padding;
         int skipSlotsRemaining = 0;
@@ -578,8 +508,6 @@ public class BossController : MonoBehaviour
                 if (Random.value <= safeChance)
                 {
                     float spawnX = startX + (currentSlot * safeSpikeWidth);
-
-                    // Siguranță finală: nu-l lăsăm să iasă în afara arenei vizuale
                     if (spawnX > -arenaWidth + 0.5f && spawnX < arenaWidth - 0.5f)
                     {
                         positions.Add(new Vector3(spawnX, flyHeight, 0));
@@ -589,20 +517,19 @@ public class BossController : MonoBehaviour
             }
             currentSlot++;
         }
-
         return positions;
     }
 
-    // ATACUL 1: Zbor din margine în margine
     IEnumerator JetpackSpikeRun()
     {
         isDashing = true;
+        lockedDDAForCurrentAttack = currentDDA;
 
         anim.Play("Muller_JetpackIgnite", 0, 0f);
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerJetpackIgnite, 0.8f);
-        float speed = 15f; // Viteza redusă pentru a vedea clar ploaia de spini
 
-        // 1. Zboară la cea mai apropiată margine
+        float speed = 15f * Mathf.Clamp(lockedDDAForCurrentAttack, 0.7f, 1.3f);
+
         float startX = (transform.position.x > 0) ? arenaWidth : -arenaWidth;
         float targetX = -startX;
         Vector3 startPosHover = new Vector3(startX, flyHeight, 0);
@@ -610,94 +537,108 @@ public class BossController : MonoBehaviour
         float dirStart = (startX < transform.position.x) ? 1 : -1;
         transform.localScale = new Vector3(dirStart * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
-        while (Vector3.Distance(transform.position, startPosHover) > 0.1f)
+        float setupTimer = 0f;
+        while (Vector3.Distance(transform.position, startPosHover) > 0.2f && setupTimer < 2.0f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, startPosHover, 25f * Time.deltaTime); // Aici se grăbește spre colț
+            setupTimer += Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, startPosHover, 25f * Time.deltaTime);
             yield return null;
         }
+        transform.position = startPosHover;
+
         anim.Play("Muller_FlyingLoop", 0, 0f);
         LevelAudioManager.Instance.StartLoop(LevelAudioManager.Instance.mullerJetpackFlight, 0.4f);
 
-        // 2. GENERĂM HARTA SPINILOR
-        System.Collections.Generic.List<Vector3> spikePositions = CalculateSpikePositions();
+        List<Vector3> spikePositions = CalculateSpikePositions();
         if (targetX < startX) spikePositions.Reverse();
 
-        // 3. CURSA CU SPINI (Mergem fix din X în X)
         float dirDash = (targetX < transform.position.x) ? 1 : -1;
         transform.localScale = new Vector3(dirDash * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
-        foreach (Vector3 pos in spikePositions)
+        if (spikePositions != null && spikePositions.Count > 0)
         {
-            // Zboară strict până ajunge EXACT la locația următorului spin de pe listă
-            while (Mathf.Abs(transform.position.x - pos.x) > 0.1f)
+            foreach (Vector3 pos in spikePositions)
             {
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, flyHeight, 0), speed * Time.deltaTime);
-                yield return null;
+                float spikeTimer = 0f;
+                bool reachedX = false;
+
+                while (!reachedX && spikeTimer < 2.0f)
+                {
+                    spikeTimer += Time.deltaTime;
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, flyHeight, 0), speed * Time.deltaTime);
+
+                    if (targetX > startX)
+                    {
+                        if (transform.position.x >= pos.x) reachedX = true;
+                    }
+                    else 
+                    {
+                        if (transform.position.x <= pos.x) reachedX = true;
+                    }
+                    yield return null;
+                }
+
+                anim.Play("Muller_DropSpike", 0, 0f);
+                LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerThrowSpike, 0.7f);
+                SpawnFallingSpike(new Vector3(pos.x, flyHeight, 0));
             }
-            anim.Play("Muller_DropSpike", 0, 0f);
-            LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerThrowSpike, 0.7f);
-
-            // A ajuns la țintă! Dă drumul spinului. Sincronizare perfectă.
-            SpawnFallingSpike(new Vector3(pos.x, flyHeight, 0));
         }
-        anim.Play("Muller_FlyingLoop", 0, 0f);
-        LevelAudioManager.Instance.StartLoop(LevelAudioManager.Instance.mullerJetpackFlight, 0.4f);
 
-        // După ce a aruncat toți spinii, continuă zborul până la capătul arenei
-        while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
+        float finalRunTimer = 0f;
+        while (Mathf.Abs(transform.position.x - targetX) > 0.2f && finalRunTimer < 3.0f)
         {
+            finalRunTimer += Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, flyHeight, 0), speed * Time.deltaTime);
             yield return null;
         }
-        LevelAudioManager.Instance.StopLoop();
-        transform.position = new Vector3(targetX, flyHeight, 0);
 
+        transform.position = new Vector3(targetX, flyHeight, 0);
+        LevelAudioManager.Instance.StopLoop();
         isDashing = false;
-        currentDashTimer = 1.5f; // Pauză ca să aterizeze spinii
+        currentDashTimer = 1.5f;
     }
 
-    // ATACUL 2: Stomp în locații diverse
     IEnumerator TargetedStompAttack()
     {
         isDashing = true;
 
-        // 1. ALEGEM LOCAȚIA (Stânga, Centru sau Dreapta)
         float[] stompSpots = { -arenaWidth * 0.6f, 0f, arenaWidth * 0.6f };
         float targetX = stompSpots[Random.Range(0, stompSpots.Length)];
         Vector3 hoverPos = new Vector3(targetX, flyHeight, 0);
 
-        // Se uită unde merge
         float dirHover = (targetX < transform.position.x) ? 1 : -1;
         transform.localScale = new Vector3(dirHover * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
-        // Zboară la locația aleasă
         while (Vector3.Distance(transform.position, hoverPos) > 0.1f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, hoverPos, 20f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, hoverPos, 13f * Time.deltaTime);
             yield return null;
         }
         anim.Play("Muller_DropPrepare", 0, 0f);
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerJetpackIgnite, 0.7f);
-        // 2. TELEGRAPH (Se încarcă și tremură)
-        float prepTime = 0.6f;
+
+        float df = GetDifficultyFactor();
+        float dynamicPrepTime = Mathf.Lerp(1.8f, 0.7f, df);
+        float prepTime = dynamicPrepTime / currentDDA;
+
         while (prepTime > 0)
         {
-            transform.position = hoverPos + (Vector3)Random.insideUnitCircle * 0.1f;
+            transform.position = hoverPos + (Vector3)Random.insideUnitCircle * (0.2f * (1f - prepTime));
             prepTime -= Time.deltaTime;
             yield return null;
         }
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerHarpoonFall, 0.6f);
-        // 3. THE STOMP
+
         anim.Play("Muller_StompImpact", 0, 0f);
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerTransition1Bonk, 1f);
         Vector3 landPos = new Vector3(targetX, groundY, 0);
+        float fallSpeed = 28f;
         while (Vector3.Distance(transform.position, landPos) > 0.1f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, landPos, 35f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, landPos, fallSpeed * Time.deltaTime);
             yield return null;
         }
 
-        // 4. UNDE DE ȘOC
         if (shockwavePrefab != null)
         {
             GameObject leftWave = Instantiate(shockwavePrefab, transform.position + new Vector3(-1f, 0, 0), Quaternion.identity);
@@ -707,24 +648,29 @@ public class BossController : MonoBehaviour
             rightWave.GetComponent<Shockwave>().direction = 1;
         }
 
-        // 5. VULNERABILITATE (Stă pe jos)
-        float healthPercent = currentHealth / maxHealth;
-        // La ultimul pas din combo (stomp-ul 2), stă pe jos mai mult ca să poată fi lovit bine
-        float groundTime = (stage2AttackStep == 2) ? Mathf.Max(2.5f, 4.0f * healthPercent) : 1.0f;
+        float groundTime;
+        if (stage2AttackStep <= 2)
+        {
+            groundTime = 0.8f;
+        }
+        else
+        {
+            groundTime = Mathf.Lerp(5.0f, 2.5f, df);
+            anim.Play("Muller_MadDown", 0, 0f);
+        }
 
         HandleLookingAtPlayer();
         isDashing = false;
         currentDashTimer = groundTime;
     }
 
-    // ATACUL 3: Dash si colectare de spini
     IEnumerator GroundSweepDash()
     {
         isDashing = true;
+        float df = GetDifficultyFactor();
 
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerJetpackIgnite, 0.9f);
 
-        // 1. DUTE LA MARGINE MAI ÎNTÂI (Evităm să înceapă din mijloc)
         float startX = (transform.position.x > 0) ? arenaWidth : -arenaWidth;
         float targetX = -startX;
 
@@ -737,7 +683,6 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // 2. Coboară la nivelul solului (dacă nu e deja acolo)
         Vector3 groundPos = new Vector3(transform.position.x, groundY, 0);
         while (Vector3.Distance(transform.position, groundPos) > 0.1f)
         {
@@ -745,11 +690,9 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // 3. AVERTIZARE (Telegraph) - Se încarcă cu albastru
         HandleLookingAtPlayer();
 
-        // Tremură pe sol o jumătate de secundă
-        float prepTime = 0.5f;
+        float prepTime = 1f;
         while (prepTime > 0)
         {
             transform.position = groundPos + (Vector3)Random.insideUnitCircle * 0.05f;
@@ -757,26 +700,23 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // 4. THE DASH (Curăță spinii)
         anim.Play("Muller_FlyingLoop", 0, 0f);
         LevelAudioManager.Instance.StartLoop(LevelAudioManager.Instance.mullerJetpackFlight, 0.6f);
         float dir = (targetX < transform.position.x) ? 1 : -1;
         transform.localScale = new Vector3(dir * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
-        // Găsim toți spinii de pe ecran ÎNAINTE să pornim (optimizare)
         GameObject[] spikesOnGround = GameObject.FindGameObjectsWithTag("Spike");
 
         while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, groundY, 0), 25f * Time.deltaTime);
+            float dynamicSweepSpeed = Mathf.Lerp(22f, 35f, df);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, groundY, 0), (dynamicSweepSpeed * currentDDA) * Time.deltaTime);
 
-            // A. Dă damage jucătorului dacă se atinge de boss
             if (playerTransform != null && Vector3.Distance(transform.position, playerTransform.position) < 1.8f)
             {
-                playerTransform.GetComponent<Movement>()?.TakeDamage();
+                playerTransform.GetComponent<Movement>()?.TakeDamage("BOSS");
             }
 
-            // B. Cât timp face dash, distruge spinii din fața lui
             foreach (GameObject spike in spikesOnGround)
             {
                 if (spike != null && Vector3.Distance(transform.position, spike.transform.position) < 2.5f)
@@ -787,48 +727,39 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // Siguranță: Distrugem orice a rămas
         foreach (GameObject spike in spikesOnGround) { if (spike != null) Destroy(spike); }
         LevelAudioManager.Instance.StopLoop();
-        // 5. VULNERABILITATE
         anim.Play("Muller_Bloated", 0, 0f);
 
-        float healthPercent = currentHealth / maxHealth;
-        float groundTime = Mathf.Max(1.0f, 2.5f * healthPercent);
+        float groundTime = Mathf.Lerp(4.0f, 1.5f, df);
 
         HandleLookingAtPlayer();
-
         isDashing = false;
         currentDashTimer = groundTime;
     }
 
     void SpawnFallingSpike(Vector3 spawnPos)
     {
-        // Spawnează spinul fix la coordonata calculată de algoritm
         GameObject spike = Instantiate(spikesPrefab, spawnPos, Quaternion.identity);
-
-        // Îi redăm fizica greoaie ca să cadă rapid!
         Rigidbody2D rb = spike.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.gravityScale = 4.5f; // Cădere grea
-            rb.linearVelocity = new Vector2(0, -2f); // Împingere inițială în jos
+            rb.gravityScale = 4.5f;
+            rb.linearVelocity = new Vector2(0, -2f);
         }
     }
 
-    // --- PHASE 3 ---
     void Stage3_Behavior()
     {
-        // Verificăm tutorialStarted ca să nu intre de 2 ori
         if (isDashing || k9Deployed || tutorialStarted) return;
 
-        tutorialStarted = true; // Oprim poarta imediat!
+        tutorialStarted = true;
 
         Vector3 spawnPos = new Vector3(arenaWidth + 4f, groundY, 0);
         GameObject k9 = Instantiate(k9Prefab, spawnPos, Quaternion.identity);
         spawnedK9 = k9.GetComponent<K9Unit>();
 
-        StartCoroutine(MillerFloatMode()); // Pornește zborul o singură dată
+        StartCoroutine(MillerFloatMode());
     }
 
     IEnumerator MillerFloatMode()
@@ -839,8 +770,7 @@ public class BossController : MonoBehaviour
         HandleLookingAtPlayer();
         anim.SetTrigger("Jetpack");
         LevelAudioManager.Instance.StartLoop(LevelAudioManager.Instance.mullerJetpackFlight, 0.6f);
-        // --- PARTEA 1: TUTORIALUL ---
-        // 1. Propulsare în aer: Se forțează poziția în DREAPTA la început
+
         Vector3 startTutorialPos = new Vector3(arenaWidth - 1f, flyHeight, 0);
         while (Vector3.Distance(transform.position, startTutorialPos) > 0.1f)
         {
@@ -850,31 +780,26 @@ public class BossController : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
 
-        // 2. Zbor spre STÂNGA pentru tutorial
         Vector3 leftTutorialTarget = new Vector3(-arenaWidth + 1f, flyHeight, 0);
         bool b1 = false, b2 = false, b3 = false;
         GameObject tutorialPinkBomb = null;
 
-        // Müller privește spre stânga
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
         while (transform.position.x > leftTutorialTarget.x + 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, leftTutorialTarget, moveSpeed * Time.deltaTime);
 
-            // Aruncă prima bombă (roșie) pe la început
             if (!b1 && transform.position.x < arenaWidth * 0.5f)
             {
                 b1 = true;
                 LaunchTutorialBomb(false);
             }
-            // Aruncă a doua bombă (roșie) la mijloc
             if (!b2 && transform.position.x < 0f)
             {
                 b2 = true;
                 LaunchTutorialBomb(false);
             }
-            // Aruncă ultima bombă (ROZ) când ajunge maxim în STÂNGA (lângă stâlp)
             if (!b3 && transform.position.x <= leftTutorialTarget.x + 0.5f)
             {
                 b3 = true;
@@ -883,16 +808,15 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // Așteptăm ca biletul roz să ricoșeze și să finalizeze tutorialul
         if (tutorialPinkBomb != null)
         {
             yield return StartCoroutine(TutorialBombBounce(tutorialPinkBomb));
         }
 
-        // --- PARTEA 2: FAZA 3 CHAOS (BUCLA INFINITĂ) ---
-        // k9Deployed este acum setat pe true (făcut în TutorialBombBounce sau manual aici)
         k9Deployed = true;
         int direction = (transform.position.x > 0) ? -1 : 1;
+        float df = GetDifficultyFactor();
+        spawnedK9.dynamicStunDuration = Mathf.Lerp(1.8f, 0.7f, df);
 
         yield return StartCoroutine(TutorialBombBounce(tutorialPinkBomb));
 
@@ -900,16 +824,23 @@ public class BossController : MonoBehaviour
         {
             float targetX = arenaWidth * direction;
 
-            // Metoda segmentelor (Codul tău original)
+            if (spawnedK9 != null)
+            {
+                spawnedK9.ddaSpeedMultiplier = currentDDA;
+                spawnedK9.patrolSpeed = Mathf.Lerp(5f, 7f, df);
+                spawnedK9.chargeSpeed = Mathf.Lerp(10f, 14f, df);
+                spawnedK9.dynamicStunDuration = Mathf.Lerp(1.8f, 0.6f, df) / currentDDA;
+            }
+
             int bombsThisPass = Random.Range(1, maxBombsPerPass + 1);
             float[] dropZones = new float[bombsThisPass];
-            float startX = -arenaWidth + 1f;
-            float endX = arenaWidth - 1f;
-            float segmentLength = (endX - startX) / bombsThisPass;
+            float startDropX = -arenaWidth + 1f;
+            float endDropX = arenaWidth - 1f;
+            float segmentLength = (endDropX - startDropX) / bombsThisPass;
 
             for (int i = 0; i < bombsThisPass; i++)
             {
-                float segStart = startX + (i * segmentLength);
+                float segStart = startDropX + (i * segmentLength);
                 float segEnd = segStart + segmentLength;
                 float padding = segmentLength * 0.2f;
                 dropZones[i] = Random.Range(segStart + padding, segEnd - padding);
@@ -921,7 +852,6 @@ public class BossController : MonoBehaviour
             float scaleDir = (direction == -1) ? 1 : -1;
             transform.localScale = new Vector3(scaleDir * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
-            // Execuție trecere Chaos
             while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
             {
                 float newX = Mathf.MoveTowards(transform.position.x, targetX, moveSpeed * Time.deltaTime);
@@ -945,7 +875,6 @@ public class BossController : MonoBehaviour
                         TicketProjectile bombScript = droppedBomb.GetComponent<TicketProjectile>();
                         if (bombScript != null)
                         {
-                            // Regula 1 din 5 este roz
                             if (bombsSinceLastPurple >= 5)
                             {
                                 bombScript.isParryable = true;
@@ -964,14 +893,13 @@ public class BossController : MonoBehaviour
             }
 
             direction *= -1;
-            yield return new WaitForSeconds(1.2f);
+            float dynamicPassPause = Mathf.Lerp(2.5f, 1.0f, df) / currentDDA;
+            yield return new WaitForSeconds(dynamicPassPause);
         }
         LevelAudioManager.Instance.StopLoop();
-        // FAZA DE DEFEAT (Când currentHealth <= 0)
         BossDefeated();
     }
 
-    // Helper pentru tutorial
     GameObject LaunchTutorialBomb(bool isPink)
     {
         anim.SetTrigger("TossTicket");
@@ -991,7 +919,6 @@ public class BossController : MonoBehaviour
     IEnumerator TutorialBombBounce(GameObject bomb)
     {
         float targetHeight = groundY + 1.5f;
-
         while (bomb != null)
         {
             if (bomb.transform.position.y <= targetHeight)
@@ -1002,72 +929,42 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // Așteptăm ca Müller să fie lovit (bomba dispare)
-        while (bomb != null)
-        {
-            yield return null;
-        }
-
+        while (bomb != null) yield return null;
         yield return new WaitForSeconds(0.5f);
 
-        // --- CURĂȚENIE DUPĂ TUTORIAL ---
-        // Găsim stâlpul și îi dezactivăm collider-ul ca să nu mai încurce
         GameObject bouncer = GameObject.FindGameObjectWithTag("TutorialBouncer");
         if (bouncer != null)
         {
             BoxCollider2D col = bouncer.GetComponent<BoxCollider2D>();
             if (col != null) col.enabled = false;
-
-            // Opțional: Poți chiar să distrugi obiectul dacă e doar un trigger invizibil
-            // Destroy(bouncer); 
         }
 
-        // Trezim câinele și deblocăm faza Chaos
-        if (spawnedK9 != null)
-        {
-            spawnedK9.WakeUp();
-        }
+        if (spawnedK9 != null) spawnedK9.WakeUp();
         k9Deployed = true;
     }
 
-    public void PlayMullerLoseSound()
-    {
-        // Sunet de impact pe canalul de Boss
-        LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerDefeat, 1f);
-    }
+    public void PlayMullerLoseSound() => LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerDefeat, 1f);
 
     void BossDefeated()
     {
         currentPhase = BossPhase.Defeated;
         StopAllCoroutines();
 
-        if (LevelAudioManager.Instance != null)
-        {
-            LevelAudioManager.Instance.PlayVictoryMusic();
-        }
+        if (LevelAudioManager.Instance != null) LevelAudioManager.Instance.PlayVictoryMusic();
 
-        bossSR.color = Color.white; // Reparăm culoarea roșie
+        bossSR.color = Color.white;
         moveSpeed = 0;
 
         BoxCollider2D bossCollider = GetComponent<BoxCollider2D>();
-        if (bossCollider != null)
-        {
-            bossCollider.enabled = false;
-        }
+        if (bossCollider != null) bossCollider.enabled = false;
 
-        if (spawnedK9 != null)
-        {
-            // Îi spunem câinelui să se oprească (vom crea această funcție în scriptul K9Unit)
-            spawnedK9.DeactivateK9();
-        }
+        if (spawnedK9 != null) spawnedK9.DeactivateK9();
         else
         {
-            // Siguranță: dacă referința e null, căutăm după tag și dezactivăm
             GameObject k9 = GameObject.FindGameObjectWithTag("K9");
             if (k9 != null) k9.GetComponent<K9Unit>()?.DeactivateK9();
         }
 
-        // Îl înghețăm în aer pentru prima animație
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -1075,29 +972,21 @@ public class BossController : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
         }
 
-        if (stageManager != null)
-        {
-            stageManager.OnBossDefeated(); // Pornim Outro-ul maimuței
-        }
+        if (stageManager != null) stageManager.OnBossDefeated();
         StartCoroutine(DramaticDeathSequence());
     }
 
     IEnumerator DramaticDeathSequence()
     {
         HandleLookingAtPlayer();
-        // PASUL 1: Lovitura în aer
         anim.Play("Muller_Defeated1", 0, 0f);
-        yield return new WaitForSeconds(1.2f); // Pauza în aer
+        yield return new WaitForSeconds(1.2f);
 
-        // PASUL 2: Începe căderea controlată
         float fallSpeed = 0f;
-        float gravity = 15f; // Puterea gravitației manuale
+        float gravity = 15f;
         anim.Play("Muller_Defeated2", 0, 0f);
 
-        // Cădem până când atingem nivelul solului (groundY)
-        // Ajustăm groundY cu o mică valoare (ex: +1.2f) pentru ca picioarele să stea pe sol
         float stopY = groundY;
-
         while (transform.position.y > stopY)
         {
             fallSpeed += gravity * Time.deltaTime;
@@ -1105,9 +994,7 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // PASUL 3: A ajuns la sol - Forțăm poziția pe podea
         transform.position = new Vector3(transform.position.x, stopY, transform.position.z);
-
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.bodyType = RigidbodyType2D.Static;
 
@@ -1116,26 +1003,24 @@ public class BossController : MonoBehaviour
 
     public void TakeDamage(float amount, string damageSource = "Banana")
     {
-        // 1. Feedback vizual: Flash-ul apare MEREU când e lovit de banană sau bilet
-        if (flashCoroutine != null) StopCoroutine(flashCoroutine);
-        flashCoroutine = StartCoroutine(CupheadDamageFlash());
+        if (currentPhase == BossPhase.Defeated || isTransitioning || isPreparingToTransition) return;
 
-        // 2. Logica de Damage: Verificăm dacă are voie să ia damage
-        if (currentPhase == BossPhase.Defeated || isTransitioning || isPreparingToTransition)
-        {
-            return;
-        }
+        if (currentPhase == BossPhase.Stage3_Chaos && damageSource == "Banana") return;
 
-        // În Faza 3, doar biletul roz (TicketBomb) dă damage, dar banana tot face flash-ul
-        if (currentPhase == BossPhase.Stage3_Chaos && damageSource == "Banana")
-        {
-            return;
-        }
-
-        // Scădem viața
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         Debug.Log($"Boss Health: {currentHealth}");
+
+        if (flashCoroutine != null) StopCoroutine(flashCoroutine);
+
+        if (damageSource == "TicketBomb" || damageSource == "Bomb")
+        {
+            flashCoroutine = StartCoroutine(HeavyBombDamageFlash());
+        }
+        else
+        {
+            flashCoroutine = StartCoroutine(CupheadDamageFlash());
+        }
 
         if (currentHealth <= 0)
         {
@@ -1146,19 +1031,35 @@ public class BossController : MonoBehaviour
 
     IEnumerator CupheadDamageFlash()
     {
-        // Efectul de "pâlpâire" albă (Cuphead style)
-        // Trecem rapid între alb și culoarea normală de câteva ori
         for (int i = 0; i < 3; i++)
         {
-            // Facem boss-ul aproape alb (un gri foarte deschis păstrează detaliile)
             bossSR.color = new Color(0.85f, 0.85f, 0.85f, 1f);
             yield return new WaitForSeconds(0.05f);
-
-            // Revenim la normal
             bossSR.color = Color.white;
             yield return new WaitForSeconds(0.05f);
         }
+        flashCoroutine = null;
+    }
 
+    IEnumerator HeavyBombDamageFlash()
+    {
+        bossSR.color = new Color(1f, 0.2f, 0.2f, 1f);
+
+        Vector3 originalScale = transform.localScale;
+        transform.localScale = originalScale * 1.15f;
+
+        yield return new WaitForSeconds(0.15f); 
+
+        for (int i = 0; i < 4; i++)
+        {
+            bossSR.color = Color.gray; // Întunecat
+            yield return new WaitForSeconds(0.04f);
+            bossSR.color = new Color(1f, 0.4f, 0.4f, 1f); // Roșu aprins
+            yield return new WaitForSeconds(0.04f);
+        }
+
+        transform.localScale = originalScale;
+        bossSR.color = Color.white;
         flashCoroutine = null;
     }
 
@@ -1168,20 +1069,16 @@ public class BossController : MonoBehaviour
         isDashing = true;
 
         HandleLookingAtPlayer();
-        anim.Play("Muller_Bloated"); // O animație de "obosit" sau Idle
+        anim.Play("Muller_Bloated");
         yield return new WaitForSeconds(1.5f);
 
         anim.Play("Muller_FlyingLoop", 0, 0f);
         LevelAudioManager.Instance.StartLoop(LevelAudioManager.Instance.mullerJetpackFlight, 0.6f);
-        // --- 1. POZIȚIONARE PENTRU CURĂȚENIE (Mersul în colț) ---
-        // Decidem care e cel mai apropiat colț sau un colț fix
+
         float startSideX = (transform.position.x > 0) ? arenaWidth : -arenaWidth;
         float targetSideX = -startSideX;
-
-        // A. Mai întâi zboară/merge în colțul de start
         Vector3 startCorner = new Vector3(startSideX, groundY, 0);
 
-        // Îl întoarcem spre colțul unde merge
         float dirToCorner = (startCorner.x < transform.position.x) ? 1 : -1;
         transform.localScale = new Vector3(dirToCorner * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
@@ -1191,19 +1088,15 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // B. S-a poziționat. Acum se întoarce spre restul arenei pentru Dash
-        yield return new WaitForSeconds(0.2f); // Mică pauză de pregătire
+        yield return new WaitForSeconds(0.2f);
 
         float dashDir = (targetSideX < transform.position.x) ? 1 : -1;
         transform.localScale = new Vector3(dashDir * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
-        // --- 2. DASH-ul PROPRIU-ZIS (Mătură toată arena) ---
-        // Acum pornește din colț, deci va lua garantat TOȚI spinii
         while (Mathf.Abs(transform.position.x - targetSideX) > 0.1f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetSideX, groundY, 0), 35f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetSideX, groundY, 0), 25f * Time.deltaTime);
 
-            // Scanăm arena în fiecare cadru (logica de "aspirator")
             GameObject[] spikes = GameObject.FindGameObjectsWithTag("Spike");
             foreach (GameObject spike in spikes)
             {
@@ -1214,12 +1107,12 @@ public class BossController : MonoBehaviour
             }
 
             if (playerTransform != null && Vector3.Distance(transform.position, playerTransform.position) < 1.8f)
-                playerTransform.GetComponent<Movement>()?.TakeDamage();
+                playerTransform.GetComponent<Movement>()?.TakeDamage("BOSS");
 
             yield return null;
         }
         LevelAudioManager.Instance.StopLoop();
-        // --- REPOZIȚIONARE ȘI SHOWREEL (LENT) ---
+
         float awayX = transform.position.x + (transform.position.x > 0 ? -3.5f : 3.5f);
         Vector3 safeSpot = new Vector3(awayX, groundY, 0);
         while (Vector3.Distance(transform.position, safeSpot) > 0.1f)
@@ -1228,13 +1121,11 @@ public class BossController : MonoBehaviour
             yield return null;
         }
 
-        // Întoarcere spre player
         float lookDir = (playerTransform.position.x < transform.position.x) ? 1 : -1;
         transform.localScale = new Vector3(lookDir * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
         yield return new WaitForSeconds(1.0f);
 
-        // Secvența de explozie (LENTĂ)
         anim.Play("Muller_JetpackIgnite", 0, 0f);
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerJetpackIgnite, 0.9f);
         yield return new WaitForSeconds(1.2f);
@@ -1266,7 +1157,7 @@ public class BossController : MonoBehaviour
 
         anim.Play("Muller_JetpackIgnite");
         LevelAudioManager.Instance.PlayBossSFX(LevelAudioManager.Instance.mullerJetpackIgnite, 0.9f);
-        yield return new WaitForSeconds(2.0f); // Timp pentru flăcări/sunet de pornire
+        yield return new WaitForSeconds(2.0f);
 
         currentPhase = BossPhase.Stage3_Chaos;
         isDashing = false;

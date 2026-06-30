@@ -183,14 +183,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::K9Unit
   currentState: 0
   patrolSpeed: 5
-  chargeSpeed: 13
+  chargeSpeed: 11
   entranceSpeed: 2.5
   targetWaitX: 7
   arenaLimit: 11
   detectionRange: 10
-  rearDetectionMinDist: 2.5
-  chargeCooldown: 1.5
+  rearDetectionMinDist: 3.5
+  chargeCooldown: 2.5
   overshootTolerance: 1
+  groundY: -5.4
 --- !u!95 &6098466718919628995
 Animator:
   serializedVersion: 7

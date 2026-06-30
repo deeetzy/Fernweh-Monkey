@@ -16,23 +16,19 @@ public class OptionsMenu : MonoBehaviour
 
     void Start()
     {
-        // 1. Încărcăm valorile
         float mVol = PlayerPrefs.GetFloat("MusicVol", 0.75f);
         float vVol = PlayerPrefs.GetFloat("VoicesVol", 0.75f);
         float sVol = PlayerPrefs.GetFloat("SFXVol", 0.75f);
 
-        // 2. Aplicăm valorile vizual pe Slidere
         musicSlider.value = mVol;
         voicesSlider.value = vVol;
         sfxSlider.value = sVol;
 
-        // 3. !!! FOARTE IMPORTANT !!! 
-        // Forțăm aplicarea volumului în Mixer chiar la pornire
         SetMusicVolume(mVol);
         SetVoicesVolume(vVol);
         SetSFXVolume(sVol);
 
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "PolizaiMuller")
+        if (ddaStatusText != null)
         {
             UpdateDDAText();
         }
@@ -41,22 +37,21 @@ public class OptionsMenu : MonoBehaviour
     public void SetMusicVolume(float value)
     {
         ApplyVolume("musicVol", value);
-        PlayerPrefs.SetFloat("MusicVol", value); // Salvăm valoarea
+        PlayerPrefs.SetFloat("MusicVol", value);
     }
 
     public void SetVoicesVolume(float value)
     {
         ApplyVolume("voicesVol", value);
-        PlayerPrefs.SetFloat("VoicesVol", value); // Salvăm valoarea
+        PlayerPrefs.SetFloat("VoicesVol", value); 
     }
 
     public void SetSFXVolume(float value)
     {
         ApplyVolume("sfxVol", value);
-        PlayerPrefs.SetFloat("SFXVol", value); // Salvăm valoarea
+        PlayerPrefs.SetFloat("SFXVol", value); 
     }
 
-    // O funcție ajutătoare ca să nu repetăm codul de Log10 peste tot
     private void ApplyVolume(string parameterName, float value)
     {
         if (value > 0.0001f)

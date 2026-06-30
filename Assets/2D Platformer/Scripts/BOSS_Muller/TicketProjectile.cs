@@ -34,7 +34,6 @@ public class TicketProjectile : MonoBehaviour
 
         if (isParryable) sr.color = parryColor;
 
-        // Setăm gravitația normală la start
         if (rb != null) rb.gravityScale = 2.0f;
 
         StartCoroutine(BombLogic());
@@ -44,7 +43,6 @@ public class TicketProjectile : MonoBehaviour
     {
         if (currentState == BombState.Exploding) return;
 
-        // Mișcare Parry spre Boss (după ce jucătorul sau stâlpul a lovit biletul)
         if (currentState == BombState.Parried && boss != null && !hasDealtDamage)
         {
             transform.position = Vector3.MoveTowards(transform.position, boss.position + Vector3.up, parrySpeed * Time.deltaTime);
@@ -57,16 +55,12 @@ public class TicketProjectile : MonoBehaviour
             }
         }
 
-        // --- LOGICA DE TUTORIAL (DOAR PENTRU BOMBA NR. 3) ---
-        // Verificăm dacă este biletul de tutorial și dacă stâlpul mai are collider-ul activ
         if (isParryable && currentState == BombState.Falling)
         {
             GameObject bouncer = GameObject.FindGameObjectWithTag("TutorialBouncer");
 
-            // Dacă am găsit stâlpul ȘI acesta are încă BoxCollider activ (înseamnă că suntem în tutorial)
             if (bouncer != null && bouncer.GetComponent<BoxCollider2D>().enabled)
             {
-                // Dezactivăm gravitația ca să nu cadă pe diagonală
                 if (rb != null) { rb.gravityScale = 0; rb.linearVelocity = Vector2.zero; }
 
                 transform.position = Vector3.MoveTowards(transform.position, bouncer.transform.position, 12f * Time.deltaTime);
@@ -75,11 +69,10 @@ public class TicketProjectile : MonoBehaviour
                 {
                     Parry();
                 }
-                return; // Ieșim, restul logicilor nu se aplică pentru tutorial
+                return; 
             }
         }
 
-        // --- LOGICA NORMALĂ (BOMBELE ROȘII ȘI ROZ DIN CHAOS) ---
         if (currentState == BombState.Falling && transform.position.y <= groundLevel)
         {
             HitGround();
@@ -92,16 +85,13 @@ public class TicketProjectile : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            // Obținem scriptul de mișcare al jucătorului
             Movement playerMove = collision.GetComponent<Movement>();
 
             if (isParryable)
             {
-                // VERIFICARE: Dacă jucătorul face double jump (parry)
                 if (playerMove != null && playerMove.isDoubleJumping)
                 {
                     Parry();
-                    // Opțional: Îi dăm un mic impuls în sus jucătorului (Parry Bounce)
                     Rigidbody2D playerRb = collision.GetComponent<Rigidbody2D>();
                     if (playerRb != null)
                     {
@@ -110,13 +100,15 @@ public class TicketProjectile : MonoBehaviour
                 }
                 else
                 {
-                    // Dacă e roz dar DOAR a intrat în ea (fără să sară/parry), explodează și îi ia viață
+                    if (DDA_DataCollector.Instance != null)
+                    {
+                        DDA_DataCollector.Instance.RecordParry(false);
+                    }
                     StartCoroutine(ExecuteExplosionSequence(true));
                 }
             }
             else
             {
-                // Dacă e bomba roșie normală, explodează direct la contact
                 StartCoroutine(ExecuteExplosionSequence(true));
             }
         }
@@ -127,15 +119,13 @@ public class TicketProjectile : MonoBehaviour
         if (currentState == BombState.Parried || currentState == BombState.Exploding) return;
 
         currentState = BombState.Parried;
+        bool success = true;
         StopAllCoroutines();
 
         if (rb != null)
         {
-            // --- FIX-UL ESTE AICI ---
-            // Mai întâi îl facem Kinematic (ca să poată avea viteză din nou)
             rb.bodyType = RigidbodyType2D.Kinematic;
 
-            // Abia ACUM putem reseta viteza fără să primim eroare
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
         }
@@ -143,7 +133,8 @@ public class TicketProjectile : MonoBehaviour
         sr.color = parryColor;
         transform.rotation = Quaternion.identity;
 
-        // Dezactivăm collider-ul ca să nu explodeze în jucător în drum spre boss
+        DDA_DataCollector.Instance.RecordParry(success);
+
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
     }
@@ -167,7 +158,6 @@ public class TicketProjectile : MonoBehaviour
     {
         if (currentState == BombState.Exploding) yield break;
 
-        // Oprim viteza înainte de Static ca să nu dea eroare
         if (rb != null && rb.bodyType != RigidbodyType2D.Static)
         {
             rb.linearVelocity = Vector2.zero;
@@ -197,7 +187,7 @@ public class TicketProjectile : MonoBehaviour
         {
             if (obj.CompareTag("Player"))
             {
-                obj.GetComponent<Movement>()?.TakeDamage();
+                obj.GetComponent<Movement>()?.TakeDamage("Ticket");
             }
         }
     }
