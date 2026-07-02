@@ -7,12 +7,12 @@
 ## Descrierea Proiectului
 Acest proiect reprezintă o lucrare de licență axată pe dezvoltarea unui sistem inteligent de DDA (Dynamic Difficulty Adjustment) dezvoltat în Unity. 
 
-Jocul este un 2D Boss Battle, inspirat din stilul animațiilor Rubber Hose din anii 1930 (Cuphead vibe). Te vei confrunta cu Müller, un șef de poliție neamț, într-o luptă dinamică pe parcursul a 3 faze distincte (Breathalyzer, Spike Strip și K-9 Unit), unde inteligența artificială îți va analiza performanța în timp real și va ajusta dificultatea meciului pe parcurs.
+Jocul este un 2D Boss Battle, inspirat din stilul animațiilor Rubber Hose din anii 1930. Te vei confrunta cu Müller, un șef de poliție neamț, într-o luptă dinamică pe parcursul a 3 faze distincte (Breathalyzer, Spike Strip și K-9 Unit), unde inteligența artificială îți va analiza performanța în timp real și va ajusta dificultatea meciului pe parcurs.
 
 ## Pași de Instalare și Lansare (Playable Build)
 Aceasta este metoda principală pentru a testa versiunea finală a jocului (Release):
 1. **Navigați la secțiunea Releases:** Pe pagina principală a repository-ului de GitHub, în meniul din partea dreaptă, accesați secțiunea *Releases*.
-2. **Descărcați arhiva:** La secțiunea *Assets*, faceți click pe arhiva `.zip` pentru a o descărca pe calculator.
+2. **Descărcați arhiva:** La secțiunea *Assets*, faceți click pe arhiva `FM.zip` pentru a o descărca pe calculator.
 3. **Dezarhivați fișierul:** Odată descărcată, faceți click dreapta pe arhivă și selectați *Extract All* într-un folder de pe PC (pas obligatoriu pentru funcționare).
 4. **Rulați jocul:** Intrați în folderul extras și rulați fișierul executabil `Fernweh Monkey.exe`. Jocul nu necesită instalare suplimentară.
 
